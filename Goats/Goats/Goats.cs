@@ -15,16 +15,16 @@ namespace Goats
         static void Main(string[] args)
         {
         }
-       public static double HayQuantity(int RefferenceGoats,int RefferenceDays,int ReffHayQuantity,
+       public static double HayQuantity(double RefferenceGoats,double RefferenceDays,double ReffHayQuantity,
                                            int GoatsNumber,int NumberOfDays )
         {
-          // RefferenceQuantity represents the known quantity of hay in kg , eaten by 'RefferenceGoats' goats 
-          // in a number of 'RefferenceDays' days
-          // GoatsNumber is the number of goats for which we have to find out how many kg of hay can be eaten in 
-          // a known number of days 'NumberOfDays'
-          
-             
-            return 0;
+            // RefferenceQuantity represents the known quantity of hay in kg , eaten by 'RefferenceGoats' goats 
+            // in a number of 'RefferenceDays' days
+            // GoatsNumber is the number of goats for which we have to find out how many kg of hay can be eaten in 
+            // a known number of days 'NumberOfDays'
+
+            double OneGoat = ReffHayQuantity / (RefferenceGoats*RefferenceDays);   
+            return Math.Truncate(OneGoat*GoatsNumber*NumberOfDays)*100/100;
         }
     }
 }
