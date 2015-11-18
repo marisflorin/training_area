@@ -10,7 +10,12 @@ namespace ConsoleApplication1.Tests
         [TestMethod()]
         public void DistanceForFirstFlight()
         {
-            Assert.AreEqual(2, FlightDistance.DistanceFlown(12, 2, 1));
+            Assert.AreEqual(2, FlightDistance.DistanceFlown(12, 4, 2));
+        }
+        [TestMethod()]
+        public void DistanceForFirstFlightDifferentSpeedRatio()
+        {
+            Assert.AreEqual(3, FlightDistance.DistanceFlown(16, 3, 1));
         }
     }
 }
