@@ -20,10 +20,17 @@ namespace ConsoleApplication1
             // DistBetweenTrains represents the starting distance between the trains in kilometers
             // Birdspeed and Trainsspeed are in km/h
             DistBetweenTrains = DistBetweenTrains / 4;
-            
             double SpeedRatio = Birdspeed / Trainsspeed;
-            double TrainDistance = DistBetweenTrains / (SpeedRatio+1);
-            double BirdDistance = TrainDistance*SpeedRatio; 
+            double BirdDistance = 0;
+          
+            // Bird will not fly if distance between trains is less than 10m
+            while (DistBetweenTrains>0.010)
+
+                {
+                double TrainDistance = DistBetweenTrains / (SpeedRatio + 1);
+                BirdDistance = BirdDistance+(TrainDistance * SpeedRatio);
+                DistBetweenTrains = DistBetweenTrains - 2 * TrainDistance;
+               }
             return BirdDistance ;
                 }
             }
