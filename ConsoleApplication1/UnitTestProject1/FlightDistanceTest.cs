@@ -22,8 +22,17 @@ namespace ConsoleApplication1.Tests
         {
             Assert.AreEqual(0.045, FlightDistance.DistanceFlown(0.160, 3, 1));
         }
-       
+        [TestMethod()]
+        public void TestFor40mDistance()
+        {
+            Assert.AreEqual(0, FlightDistance.DistanceFlown(0.040, 2, 1));
         }
+        [TestMethod()]
+        public void Testbigerthan1km()
+        {
+            Assert.AreEqual(0.296, FlightDistance.DistanceFlown(1.2, 2, 1));
+        }
+    }
     }
 
 

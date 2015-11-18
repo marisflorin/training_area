@@ -31,7 +31,7 @@ namespace ConsoleApplication1
                 BirdDistance = BirdDistance+(TrainDistance * SpeedRatio);
                 DistBetweenTrains = DistBetweenTrains - 2 * TrainDistance;
                }
-            return BirdDistance ;
+            return Math.Truncate(BirdDistance*1000)/1000 ;
                 }
             }
 
