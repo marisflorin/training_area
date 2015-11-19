@@ -22,18 +22,37 @@ namespace ConsoleApplication1
             DistBetweenTrains = DistBetweenTrains / 4;
             double SpeedRatio = Birdspeed / Trainsspeed;
             double BirdDistance = 0;
-          
-            // Bird will not fly if distance between trains is less than 10m
-            while (DistBetweenTrains>0.010)
 
-                {
+            // Bird will not fly if distance between trains is less than 10m
+            do
+
+            {
                 double TrainDistance = DistBetweenTrains / (SpeedRatio + 1);
-                BirdDistance = BirdDistance+(TrainDistance * SpeedRatio);
+                BirdDistance = BirdDistance + (TrainDistance * SpeedRatio);
                 DistBetweenTrains = DistBetweenTrains - 2 * TrainDistance;
-               }
-            return Math.Truncate(BirdDistance*1000)/1000 ;
-                }
-            }
+            } while (DistBetweenTrains > 0);
+                return Math.Truncate(BirdDistance * 1000) / 1000;
+        }
+
+     public static double DistanceFlownFormula(double DistBetweenTrains, int Birdspeed, int Trainsspeed)
+        {
+            // DistBetweenTrains represents the starting distance between the trains in kilometers
+            // Birdspeed and Trainsspeed are in km/h
+
+            DistBetweenTrains = DistBetweenTrains / 4;
+            double SpeedRatio = Birdspeed / Trainsspeed;
+            // The trains have the same speed => each will cover half the distance until they meet,
+            // The SpeedRatio will show us how much more ground can the bird cover until the trains meet 
+
+            Double BirdDistance = SpeedRatio * (DistBetweenTrains / 2);
+
+
+            return Math.Truncate(BirdDistance * 1000) / 1000;
+        
+        }
+
+
+     }
 
 
 }

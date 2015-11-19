@@ -10,7 +10,7 @@ namespace ConsoleApplication1.Tests
         [TestMethod()]
         public void DistanceForFirstFlight()
         {
-            Assert.AreEqual(0.020, FlightDistance.DistanceFlown(0.120, 4, 2));
+            Assert.AreEqual(0.030, FlightDistance.DistanceFlown(0.120, 4, 2));
         }
         [TestMethod()]
         public void DistanceForFirstFlightDifferentSpeedRatio()
@@ -31,6 +31,11 @@ namespace ConsoleApplication1.Tests
         public void Testbigerthan1km()
         {
             Assert.AreEqual(0.296, FlightDistance.DistanceFlown(1.2, 2, 1));
+        }
+        [TestMethod()]
+        public void TestIfMethodsAreEqual()
+        {
+            Assert.AreEqual(FlightDistance.DistanceFlownFormula(12, 2, 1), FlightDistance.DistanceFlown(12, 2, 1));
         }
     }
     }
