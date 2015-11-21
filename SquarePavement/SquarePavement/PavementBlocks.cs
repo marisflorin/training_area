@@ -20,8 +20,10 @@ namespace SquarePavement
         }
         public static int BlockNumber(int SquareLength, int SquareWidth, double BlockSize)
         {
-            double BlocksLength = SquareLength / BlockSize;
-            double BlocksWidth = SquareWidth / BlockSize;          
+            // SquareLength and SquareWidth are the dimenssions of the square in meters
+            // Blocksize is the lenth of the sides of a paving block in centimeters
+            double BlocksLength = SquareLength*100 / BlockSize;
+            double BlocksWidth = SquareWidth*100 / BlockSize;          
             int BlockNumber=Convert.ToInt32((Math.Ceiling(BlocksLength))*(Math.Ceiling(BlocksWidth)));
             return BlockNumber;
         }
