@@ -18,13 +18,11 @@ namespace SquarePavement
         static void Main(string[] args)
         {
         }
-        public static int BlockNumber(int SquareLength, int SquareWidth, int BlockSize)
+        public static int BlockNumber(int SquareLength, int SquareWidth, double BlockSize)
         {
-
-
-            int BlockNumber=(SquareLength/BlockSize)*(SquareWidth/ BlockSize);
-
-
+            double BlocksLength = SquareLength / BlockSize;
+            double BlocksWidth = SquareWidth / BlockSize;          
+            int BlockNumber=Convert.ToInt32((Math.Ceiling(BlocksLength))*(Math.Ceiling(BlocksWidth)));
             return BlockNumber;
         }
     }
