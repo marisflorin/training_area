@@ -18,9 +18,13 @@ namespace SquarePavement
         static void Main(string[] args)
         {
         }
-        public static int BlockNumber(int squarelength, int squarewidth, int blocksize)
+        public static int BlockNumber(int SquareLength, int SquareWidth, int BlockSize)
         {
-            int BlockNumber=0;
+
+
+            int BlockNumber=(SquareLength/BlockSize)*(SquareWidth/ BlockSize);
+
+
             return BlockNumber;
         }
     }
