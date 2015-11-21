@@ -18,7 +18,12 @@ namespace Mushrooms
         {
             // MushroomRatio is the ratio between red mushrooms and white mushrooms
             double RedMushrooms = MushroomRatio * (TotalMushrooms / (1 + MushroomRatio));
-            return RedMushrooms;
+            if (RedMushrooms - Math.Truncate(RedMushrooms) == 0)
+                return RedMushrooms;
+            else {
+                Console.WriteLine("The given ratio is not exact and the number of mushrooms was adjusted from the value of {0}",RedMushrooms);
+                return Math.Truncate(RedMushrooms);
+            }
         }
     }
 

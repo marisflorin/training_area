@@ -17,6 +17,11 @@ namespace Mushrooms.Tests
         {
             Assert.AreEqual(3, RedMushrooms.RedMushroomNo(12, (double)1/3));
         }
+        [TestMethod()]
+        public void TestNoDecimalMushroom()
+        {
+            Assert.AreEqual(7, RedMushrooms.RedMushroomNo(10, 3));
+        }
     }
 }
 
