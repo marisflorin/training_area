@@ -12,6 +12,11 @@ namespace Mushrooms.Tests
         {
             Assert.AreEqual(9,RedMushrooms.RedMushroomNo(12,3));
         }
+        [TestMethod()]
+        public void TestLessRedMushrooms()
+        {
+            Assert.AreEqual(3, RedMushrooms.RedMushroomNo(12, (double)1/3));
+        }
     }
 }
 

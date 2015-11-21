@@ -16,7 +16,9 @@ namespace Mushrooms
         }
         public static double RedMushroomNo(int TotalMushrooms, double MushroomRatio)
         {
-        return 0;
+            // MushroomRatio is the ratio between red mushrooms and white mushrooms
+            double RedMushrooms = MushroomRatio * (TotalMushrooms / (1 + MushroomRatio));
+            return RedMushrooms;
         }
     }
 
