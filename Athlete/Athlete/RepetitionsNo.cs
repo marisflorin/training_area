@@ -21,7 +21,8 @@ namespace Athlete
         }
         public static int TotalRepetitions(int RoundNumber)
         {
-            return RoundNumber;
+        // The increasing set of repetitions complete the decreasing set of repetitions so the total is the square of the round number
+            return RoundNumber*RoundNumber;
         }
     }
 }
