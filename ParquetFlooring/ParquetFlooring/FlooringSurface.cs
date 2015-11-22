@@ -28,6 +28,9 @@ namespace ParquetFlooring
             double SurfaceNeeded = RoomLength * RoomWidth * ++AllowedLosses;
             double SheetSurface = SheetLength * SheetWidth;
             double NumberOfSheets = SurfaceNeeded / SheetSurface;
+            if (NumberOfSheets - Math.Truncate(NumberOfSheets) > 0)
+                return Math.Ceiling(NumberOfSheets);
+             // The loss percentage will be grather than allowed
             return NumberOfSheets;
         }
     }

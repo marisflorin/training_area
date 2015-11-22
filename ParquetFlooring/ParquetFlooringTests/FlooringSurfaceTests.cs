@@ -12,6 +12,11 @@ namespace ParquetFlooring.Tests
         {
             Assert.AreEqual(10,FlooringSurface.SheetsNeeded(2,2,230,20,15));
         }
-    }
+        [TestMethod()]
+        public void DecimalSheetsizeTest()
+        {
+            Assert.AreEqual(10,FlooringSurface.SheetsNeeded(2,2,240,20,15));
+        }
+}
 }
 
