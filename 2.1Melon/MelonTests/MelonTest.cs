@@ -17,6 +17,11 @@ namespace _2._1Melon.Tests
         {
             Assert.AreEqual("No", MelonShare.MelonShareable(5));
         }
+        [TestMethod()]
+        public void MelonTestForTwokg()
+        {
+            Assert.AreEqual("No", MelonShare.MelonShareable(2));
+        }
     }
 }
 

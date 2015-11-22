@@ -20,7 +20,7 @@ namespace _2._1Melon
       public static string MelonShareable(int Melonweigth)
         {
             // Melonweigth should be entered in kilograms
-            if (Melonweigth %2 ==0)
+            if ((Melonweigth %2 ==0) && (Melonweigth != 2))
             return "Yes";
             return "No";
 
