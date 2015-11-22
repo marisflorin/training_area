@@ -12,6 +12,11 @@ namespace Athlete.Tests
         {
             Assert.AreEqual(25,RepetitionsNo.TotalRepetitions(5));
         }
+        [TestMethod()]
+        public void NegativeRoundTest()
+        {
+            Assert.AreEqual(0, RepetitionsNo.TotalRepetitions(-5));
+        }
     }
 }
 

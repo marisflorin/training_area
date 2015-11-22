@@ -21,7 +21,14 @@ namespace Athlete
         }
         public static int TotalRepetitions(int RoundNumber)
         {
-        // The increasing set of repetitions complete the decreasing set of repetitions so the total is the square of the round number
+            // If RoundNumber is negative there will be no repetitions
+            if  (RoundNumber < 0)
+            {
+                Console.WriteLine("The Round Number should be positive for exemple {0} should be used instead of {1}", RoundNumber * -1, RoundNumber);
+                return 0;
+            }
+            else
+            // The increasing set of repetitions complete the decreasing set of repetitions so the total is the square of the round number
             return RoundNumber*RoundNumber;
         }
     }
