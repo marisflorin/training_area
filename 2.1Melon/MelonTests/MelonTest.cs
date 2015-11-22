@@ -22,6 +22,11 @@ namespace _2._1Melon.Tests
         {
             Assert.AreEqual("No", MelonShare.MelonShareable(2));
         }
+        [TestMethod()]
+        public void MelonNegativeValues()
+        {
+            Assert.AreEqual("No", MelonShare.MelonShareable(-6));
+        }
     }
 }
 
