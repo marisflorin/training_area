@@ -8,9 +8,14 @@ namespace _2._1Melon.Tests
     public class MelonTest
     {
         [TestMethod()]
-        public void MelonShareableTest()
+        public void MelonEvenTest()
         {
             Assert.AreEqual("Yes",MelonShare.MelonShareable(6));
+        }
+        [TestMethod()]
+        public void MelonOddTest()
+        {
+            Assert.AreEqual("No", MelonShare.MelonShareable(5));
         }
     }
 }
