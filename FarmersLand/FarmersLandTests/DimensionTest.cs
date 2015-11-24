@@ -8,10 +8,16 @@ namespace FarmersLand.Tests
     public class DimensionTest
     {
         [TestMethod()]
-        public void TestFor400m()
+        public void TestFor400()
         {
             Assert.AreEqual(400,Dimension.SideDimension(20,100));
         }
+        [TestMethod()]
+        public void TestForZeroSide()
+        {
+            Assert.AreEqual(400, Dimension.SideDimension(16, 0));
+        }
     }
+
 }
 

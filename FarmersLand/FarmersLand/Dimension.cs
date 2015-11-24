@@ -20,7 +20,7 @@ namespace FarmersLand
             // FinalSurface will be entered in Ha and AddedSideLength 
             FinalSurface *= 10000;
            double Delta = AddedSideLength * AddedSideLength +4* FinalSurface;
-            if ((Delta > 0))
+            if ((((Delta > 0))&&(FinalSurface>=0))&&(AddedSideLength>=0))
             {
                 if (((-AddedSideLength - Math.Sqrt(Delta)) / 2) > 0)
                     return ((-AddedSideLength - Math.Sqrt(Delta)) / 2);
