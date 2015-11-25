@@ -22,5 +22,10 @@ namespace RentDebtTests
         {
             Assert.AreEqual(500, TotalRent.TotalMonthlyRent(100, 40));
         }
+        [TestMethod]
+        public void Testfor41days()
+        {
+            Assert.AreEqual(0, TotalRent.TotalMonthlyRent(100, 41));
+        }
     }
 }
