@@ -18,7 +18,8 @@ namespace RentDebt
         public static double TotalMonthlyRent(double MonthlyRent, int DaysLate)
         {
             if ((DaysLate > 0) && (DaysLate <= 10)) return (MonthlyRent + (MonthlyRent * 0.02) * DaysLate);
-
+            if ((DaysLate > 10) && (DaysLate <= 30)) return (MonthlyRent + (MonthlyRent * 0.05) * DaysLate);
+            if ((DaysLate > 31) && (DaysLate <= 40)) return (MonthlyRent + (MonthlyRent * 0.1) * DaysLate);
             return 0;   
                 }
     }
