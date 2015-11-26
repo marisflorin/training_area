@@ -15,7 +15,12 @@ namespace TaxiTests
         [TestMethod]
         public void TestNightTimeUnder20km()
         {
-            Assert.AreEqual(70, TripCost.TotalTripCost(10, 2200));
+            Assert.AreEqual(70, TripCost.TotalTripCost(10, 0759));
+        }
+        [TestMethod]
+        public void TestIfValidTime()
+        {
+            Assert.AreEqual(0, TripCost.TotalTripCost(10,0760));
         }
     }
 }

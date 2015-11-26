@@ -24,7 +24,7 @@ namespace _2._5Taxi
         static void Main()
         {}
         public static double TotalTripCost(double Distance, double Time)
-        {   if ((Time >= 0) && (Time < 2400))
+        {   if (((Time >= 0) && (Time < 2400))&& ((Time % 100 >= 0) && (Time % 100 < 60)))
                 if ((Time > 800) && (Time < 2100))
                     return Distance * 5;
                 else
