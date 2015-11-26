@@ -17,6 +17,20 @@ namespace RomanNumbersTest
         {
             Assert.AreEqual("III", Convertor.ConvertedResult(3));
         }
-
+        [TestMethod]
+        public void TestFor4()
+        {
+            Assert.AreEqual("IV", Convertor.ConvertedResult(4));
+        }
+        [TestMethod]
+        public void TestFor8()
+        {
+            Assert.AreEqual("VIII", Convertor.ConvertedResult(8));
+        }
+        [TestMethod]
+        public void TestFor9()
+        {
+            Assert.AreEqual("IX", Convertor.ConvertedResult(9));
+        }
     }
 }
