@@ -13,20 +13,25 @@ namespace _2._6Roman_Numbers
         static void Main(string[] args)
         {
         }
+        public static string ConvertorUnits(int Number, string Unit, string Five, string Ten)
+        {
+            string Converted = "";
+            if (Number <4) for (int i=1; i <= Number; i++)  { Converted += Unit; }
+            if ((Number > 3) && (Number < 9))
+            {
+                Converted = Five;
+                if (Number == 4) Converted = Unit + Converted;
+                for (int i = 5; i < Number; i++) { Converted += Unit; }
+            }
+            if (Number == 9) Converted = Unit+Ten;
+            return Converted;
+        }
         public static string ConvertedResult(int Number)
         {
             string Converted = "";
             if ((Number > 0) && (Number <= 100))
-                
-            {                 
-                if (Number<4) for (int i=1; i <= Number; i++)  { Converted += "I"; }
-                if ((Number>3)&&(Number<9))
-                 {
-                    Converted = "V";
-                    if (Number == 4) Converted = "I" + Converted ;
-                    for (int i = 5; i < Number; i++) { Converted += "I"; }
-                 }
-                if (Number == 9) Converted = "IX";
+            { 
+                Converted += Convertor.ConvertorUnits(Number, "I", "V", "X");
                 return Converted;
              }
             return "Number should be between 1 and 100";
