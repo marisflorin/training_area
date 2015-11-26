@@ -30,10 +30,10 @@ namespace _2._6Roman_Numbers
         {
             string Converted = "";
             if ((Number > 0) && (Number <= 100))
-            { 
-                Converted += Convertor.ConvertorUnits(Number, "I", "V", "X");
+            {
+                Converted += Convertor.ConvertorUnits(Number / 10, "X", "L", "C") + Convertor.ConvertorUnits(Number % 10, "I", "V", "X");
                 return Converted;
-             }
+            }
             return "Number should be between 1 and 100";
 
         }
