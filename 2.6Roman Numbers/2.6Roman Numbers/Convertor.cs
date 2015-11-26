@@ -30,6 +30,8 @@ namespace _2._6Roman_Numbers
         {
             string Converted = "";
             if ((Number > 0) && (Number <= 100))
+                if (Number == 100) return "C";
+            else
             {
                 Converted += Convertor.ConvertorUnits(Number / 10, "X", "L", "C") + Convertor.ConvertorUnits(Number % 10, "I", "V", "X");
                 return Converted;

@@ -33,9 +33,19 @@ namespace RomanNumbersTest
             Assert.AreEqual("IX", Convertor.ConvertedResult(9));
         }
         [TestMethod]
-        public void TestFor10()
+        public void TestFor25()
         {
-            Assert.AreEqual("XV", Convertor.ConvertedResult(15));
+            Assert.AreEqual("XXV", Convertor.ConvertedResult(25));
+        }
+        [TestMethod]
+        public void TestFor99()
+        {
+            Assert.AreEqual("XCIX", Convertor.ConvertedResult(99));
+        }
+        [TestMethod]
+        public void TestFor100()
+        {
+            Assert.AreEqual("C", Convertor.ConvertedResult(100));
         }
     }
 }
