@@ -23,10 +23,16 @@ namespace _2._5Taxi
     {
         static void Main()
         {}
-        public static double TotalTripCost(double Distance, double Time)
-        {   if (((Time >= 0) && (Time < 2400))&& ((Time % 100 >= 0) && (Time % 100 < 60)))
+        public static double TotalTripCost(double Distance, int Time)
+        { // Time will be entered as an integer number , for exemple 08:00 will be 0800 or 800
+          // Distance must be entered as a positive number representing kilometers
+            if (((Time >= 0) && (Time < 2400)) && ((Time % 100 >= 0) && (Time % 100 < 60)) && (Distance > 0))
                 if ((Time > 800) && (Time < 2100))
-                    return Distance * 5;
+                {
+                    if (Distance < 21) return Distance * 5;
+                    if (Distance > 60) return Distance * 2 * 3;
+                    return Distance * 2 * 4;
+                }
                 else
                     return Distance * 7;  
             return 0;
