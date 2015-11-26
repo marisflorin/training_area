@@ -37,8 +37,8 @@ namespace _2._5Taxi
                 else
                 {
                     if (Distance < 21) return Distance * 7;
-                    if (Distance > 60) return Distance * 2 * 5;
-                    return Distance * 2 * 4;
+                    if (Distance > 60) return Distance * 2 * 4;
+                    return Distance * 2 * 5;
                 }
             return 0;
         }
