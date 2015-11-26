@@ -26,6 +26,7 @@ namespace _2._5Taxi
         public static double TotalTripCost(double Distance, int Time)
         { // Time will be entered as an integer number , for exemple 08:00 will be 0800 or 800
           // Distance must be entered as a positive number representing kilometers
+          // The method calculates the price based on the price corresponding to the starting time of the trip
             if (((Time >= 0) && (Time < 2400)) && ((Time % 100 >= 0) && (Time % 100 < 60)) && (Distance > 0))
                 if ((Time > 800) && (Time < 2100))
                 {
@@ -34,7 +35,11 @@ namespace _2._5Taxi
                     return Distance * 2 * 4;
                 }
                 else
-                    return Distance * 7;  
+                {
+                    if (Distance < 21) return Distance * 7;
+                    if (Distance > 60) return Distance * 2 * 5;
+                    return Distance * 2 * 4;
+                }
             return 0;
         }
     }

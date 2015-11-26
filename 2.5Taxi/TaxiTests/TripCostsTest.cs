@@ -27,5 +27,15 @@ namespace TaxiTests
         {
             Assert.AreEqual(240, TripCost.TotalTripCost(30, 900));
         }
+        [TestMethod]
+        public void TestDayTimeOver60km()
+        {
+            Assert.AreEqual(420, TripCost.TotalTripCost(70, 2059));
+        }
+         [TestMethod]
+        public void TestNightTimeOver60km()
+        {
+            Assert.AreEqual(700, TripCost.TotalTripCost(70, 2100));
+        }
     }
 }
