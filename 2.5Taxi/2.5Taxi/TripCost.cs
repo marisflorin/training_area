@@ -23,24 +23,44 @@ namespace _2._5Taxi
     {
         static void Main()
         {}
-        public static double TotalTripCost(double Distance, int Time)
+        public static double TotalTripCost(double distance, int time)
         { // Time will be entered as an integer number , for exemple 08:00 will be 0800 or 800
           // Distance must be entered as a positive number representing kilometers
           // The method calculates the price based on the price corresponding to the starting time of the trip
-            if (((Time >= 0) && (Time < 2400)) && ((Time % 100 >= 0) && (Time % 100 < 60)) && (Distance > 0))
-                if ((Time > 800) && (Time < 2100))
+            if (ValidTimeFormat(time) && PositiveDistance(distance))
+                if ((time > 800) && (time < 2100))
                 {
-                    if (Distance < 21) return Distance * 5;
-                    if (Distance > 60) return Distance * 2 * 3;
-                    return Distance * 2 * 4;
+                    if (distance < 21) return distance * 5;
+                    if (distance > 60) return distance * 2 * 3;
+                    return distance * 2 * 4;
                 }
                 else
                 {
-                    if (Distance < 21) return Distance * 7;
-                    if (Distance > 60) return Distance * 2 * 4;
-                    return Distance * 2 * 5;
+                    if (distance < 21) return distance * 7;
+                    if (distance > 60) return distance * 2 * 4;
+                    return distance * 2 * 5;
                 }
             return 0;
+        }
+
+        private static bool PositiveDistance(double Distance)
+        {
+            return Distance > 0;
+        }
+
+        private static bool ValidTimeFormat(int Time)
+        {
+            return IsValidHour(Time) && IsValidMinute(Time);
+        }
+
+        private static bool IsValidMinute(int Time)
+        {
+            return (Time % 100 >= 0) && (Time % 100 < 60);
+        }
+
+        private static bool IsValidHour(int Time)
+        {
+            return (Time >= 0) && (Time < 2400);
         }
     }
 }
