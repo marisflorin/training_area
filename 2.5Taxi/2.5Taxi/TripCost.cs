@@ -23,27 +23,54 @@ namespace _2._5Taxi
     {
         static void Main()
         {}
-        public static double TotalTripCost(double distance, int time)
+      public static decimal[] daytimeprices = { 5, 8, 6 };
+      public static decimal[] nighttimeprices = { 7, 10, 8 };
+      public static decimal TotalTripCost(decimal distance, int time)
         { // Time will be entered as an integer number , for exemple 08:00 will be 0800 or 800
           // Distance must be entered as a positive number representing kilometers
           // The method calculates the price based on the price corresponding to the starting time of the trip
+
+
             if (ValidTimeFormat(time) && PositiveDistance(distance))
-                if ((time > 800) && (time < 2100))
-                {
-                    if (distance < 21) return distance * 5;
-                    if (distance > 60) return distance * 2 * 3;
-                    return distance * 2 * 4;
-                }
-                else
-                {
-                    if (distance < 21) return distance * 7;
-                    if (distance > 60) return distance * 2 * 4;
-                    return distance * 2 * 5;
-                }
+                return TripCalculator(distance, time);
             return 0;
         }
 
-        private static bool PositiveDistance(double Distance)
+        private static decimal TripCalculator(decimal distance, int time)
+        {
+            if (IsShortDistance(distance)) return ShortDistanceCost(distance, time);
+            if (IsLongDistance(distance)) return LongDistanceCost(distance, time);
+            return MediumDistanceCost(distance, time);
+
+        }
+
+        private static decimal MediumDistanceCost(decimal distance, int time)
+        {
+            return ReturnPrice(time)[1] * distance;
+        }
+
+        private static decimal LongDistanceCost(decimal distance, int time)
+        {
+            return ReturnPrice(time)[2] * distance;
+        }
+
+        private static decimal ShortDistanceCost(decimal distance, int time)
+        {
+            return ReturnPrice(time)[0] * distance;
+        }
+
+        private static decimal[] ReturnPrice(int time)
+        {
+            return IsDayTime(time) ? daytimeprices : nighttimeprices;
+        }
+
+  
+        private static bool IsDayTime(int time)
+        {
+            return (time > 800) && (time < 2100);
+        }
+
+        private static bool PositiveDistance(decimal Distance)
         {
             return Distance > 0;
         }
@@ -62,5 +89,14 @@ namespace _2._5Taxi
         {
             return (Time >= 0) && (Time < 2400);
         }
+    private static bool IsShortDistance(decimal distance)
+    {
+        return  distance<21;
     }
+    private static bool IsLongDistance(decimal distance)
+    {
+        return distance > 60;
+    }
+    
+}
 }
