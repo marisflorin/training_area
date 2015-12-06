@@ -17,5 +17,15 @@ namespace _3._1ChessBoard.Tests
         {
             Assert.AreEqual(5, CessBoard.NumberOFSquares(2));
         }
+        [TestMethod()]
+        public void TestFor0()
+        {
+            Assert.AreEqual(0, CessBoard.NumberOFSquares(0));
+        }
+        [TestMethod()]
+        public void TestFornegative()
+        {
+            Assert.AreEqual(0, CessBoard.NumberOFSquares(-8));
+        }
     }
 }
