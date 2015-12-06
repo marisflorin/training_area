@@ -22,6 +22,11 @@ namespace _3._2Prefix.Tests
         {
             Assert.AreEqual("", Prefix.FindPrefix("bab", ""));
         }
+        [TestMethod()]
+        public void DifferentLengthTest()
+        {
+            Assert.AreEqual("aaa", Prefix.FindPrefix("aaab", "aaaabbaa"));
+        }
     }
 }
 

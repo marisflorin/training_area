@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace _3._2Prefix
 {
+    // Prefix
+    // Dacă ai două stringuri, găsește-le prexiul comun.Exemplu: aaab și aaaabbaa au 
+    // prefixul comun aaa
    public class Prefix
     {
         static void Main(string[] args)
