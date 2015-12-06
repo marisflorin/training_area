@@ -14,15 +14,30 @@ namespace _3._2Prefix
         public static string FindPrefix(string string1, string string2)
         {
             string prefix = "";
-            int steps = GetShortStringLength(string1, string2);
             int i = 0;
-            while (i <= GetShortStringLength(string1,string2) && string1[i]==string2[i]) 
-            {
-                prefix += string1[i];
-                i++;
-            }
+            if (AreValidStrings(string1, string2))
+                while (InsideString(string1, string2, i) && IsPrefixChar(string1, string2, i))
+                 {
+                    prefix += string1[i];
+                    i++;
+                 }
 
             return prefix;
+        }
+
+        private static bool AreValidStrings(string string1, string string2)
+        {
+            return string1 != "" && string2 != "";
+        }
+
+        private static bool IsPrefixChar(string string1, string string2, int i)
+        {
+            return string1[i] == string2[i];
+        }
+
+        private static bool InsideString(string string1, string string2, int i)
+        {
+            return i <= GetShortStringLength(string1, string2);
         }
 
         private static int GetShortStringLength(string firststring, string secoundstring)

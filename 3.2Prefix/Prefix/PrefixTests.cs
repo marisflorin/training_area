@@ -12,6 +12,16 @@ namespace _3._2Prefix.Tests
         {
             Assert.AreEqual("aa",Prefix.FindPrefix("aab","aac"));
         }
+        [TestMethod()]
+        public void NoPrefixTest()
+        {
+            Assert.AreEqual("", Prefix.FindPrefix("bab", "aac"));
+        }
+        [TestMethod()]
+        public void VoidStringTest()
+        {
+            Assert.AreEqual("", Prefix.FindPrefix("bab", ""));
+        }
     }
 }
 
