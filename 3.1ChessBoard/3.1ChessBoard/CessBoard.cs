@@ -15,7 +15,12 @@ namespace _3._1ChessBoard
         {}
         public static int NumberOFSquares(int side)
         {
-            return side;
+            int totalsquares = 0;
+            for (int i=1; i <= side; i++ )
+            {
+                totalsquares += i * i; 
+            }
+            return totalsquares;
         }  
     }
 }
