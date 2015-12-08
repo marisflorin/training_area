@@ -19,18 +19,32 @@ namespace _3._4ExcelColumns
         }
         public static string ColumnName(int columnindex)
         {
-            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (columnindex <= 0) return ""; 
+            string basechars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            int numberofchars = 26;
             string columnname = "";
-            if (columnindex/26>0) 
-                AddLetter(columnindex/26, alphabet, ref columnname);
-            AddLetter(columnindex % 26, alphabet, ref columnname);
+            while (IsRemainder(columnindex,numberofchars))
+            {
+                ConvertRemainder(ref columnindex,numberofchars, basechars, ref columnname);
+            }
             return columnname;
         }
 
-        private static void AddLetter(int alphabetindex, string alphabet, ref string columnname)
+        private static bool IsRemainder(int columnindex,int numberofchars)
+        {
+            return columnindex % numberofchars> 0;
+        }
+
+        private static void ConvertRemainder(ref int columnindex, int numberofchars, string alphabet, ref string columnname)
+        {
+            AddCharacter(columnindex % numberofchars, alphabet, ref columnname);
+            columnindex = columnindex / numberofchars;
+        }
+
+        private static void AddCharacter(int alphabetindex, string alphabet, ref string columnname)
         {
             alphabetindex -= 1;
-            columnname += alphabet[alphabetindex];
+            columnname = alphabet[alphabetindex]+columnname;
         }
     }
 }
