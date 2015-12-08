@@ -17,6 +17,21 @@ namespace _3._3Panagram.Tests
         {
             Assert.AreEqual(true, Panagram.IsPanagram("The quick brown fox jumps over the lazy dog"));
         }
-          }
+        [TestMethod()]
+        public void IsUpCaseSentincePanagramTest()
+        {
+            Assert.AreEqual(true, Panagram.IsPanagram("The quick brown fox jumps over The lazy dog"));
+        }
+        [TestMethod()]
+        public void TestVoidString()
+        {
+            Assert.AreEqual(false, Panagram.IsPanagram(""));
+        }
+        [TestMethod()]
+        public void NotPanagram()
+        {
+            Assert.AreEqual(false, Panagram.IsPanagram("the brown box"));
+        }
+    }
  }
                                                               

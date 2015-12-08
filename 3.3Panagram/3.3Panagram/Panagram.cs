@@ -16,25 +16,36 @@ namespace _3._3Panagram
         }
         public static bool IsPanagram(string phrase)
         {
-        
-            string panagram = "abcdefghijklmnopqrstuvwxyz";
+            ConvertStringToLowerCase(ref phrase);
+            string characterstocheck = "abcdefghijklmnopqrstuvwxyz";
             for (int i = 0; i < phrase.Length; i++)
             {
-                for (int j = 0; j < panagram.Length; j++)
+                for (int j = 0; j < characterstocheck.Length; j++)
                 {
-                    if (phrase[i] == panagram[j])
+                    if (AreEqualChars(phrase, characterstocheck, i, j))
                     {
-                        RemoveCurrentChar(ref panagram, j);
+                        RemoveCurrentChar(ref characterstocheck, j);
                         break;
                     }
                 }
             }
-            return panagram == "" ? true : false;
+            return characterstocheck == "" ? true : false;
+        }
+
+        private static bool AreEqualChars(string phrase, string characterstocheck, int i, int j)
+        {
+            return phrase[i] == characterstocheck[j];
+        }
+
+        private static void ConvertStringToLowerCase(ref string phrase)
+        {
+            phrase = phrase.ToLower();
         }
 
         private static void RemoveCurrentChar(ref string panagram, int j)
         {
             panagram = panagram.Remove(j, 1);
+         
         }
     }
 }
