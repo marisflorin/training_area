@@ -10,8 +10,13 @@ namespace _3._3Panagram.Tests
         [TestMethod()]
         public void IsPanagramTest()
         {
-            Assert.AreEqual(true,Panagram.IsPanagram("abc"));
+            Assert.AreEqual(true,Panagram.IsPanagram("abcdefghijklmnopqrstuvwxyz"));
         }
-    }
-}
-
+        [TestMethod()]
+        public void IsSentincePanagramTest()
+        {
+            Assert.AreEqual(true, Panagram.IsPanagram("The quick brown fox jumps over the lazy dog"));
+        }
+          }
+ }
+                                                              
