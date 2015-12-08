@@ -8,9 +8,14 @@ namespace _3._4ExcelColumns.Tests
     public class ColumnsTest
     {
         [TestMethod()]
-        public void ColumnNameTest()
+        public void OneLetterTest()
         {
             Assert.AreEqual("D",ExcelComumns.ColumnName(4));
+        }
+        [TestMethod()]
+        public void TwoLetterTest()
+        {
+            Assert.AreEqual("AM", ExcelComumns.ColumnName(39));
         }
     }
 }
