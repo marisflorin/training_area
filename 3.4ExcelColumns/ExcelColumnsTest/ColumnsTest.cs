@@ -10,7 +10,7 @@ namespace _3._4ExcelColumns.Tests
         [TestMethod()]
         public void OneLetterTest()
         {
-            Assert.AreEqual("D",ExcelComumns.ColumnName(4));
+            Assert.AreEqual("B",ExcelComumns.ColumnName(2));
         }
         [TestMethod()]
         public void TwoLetterTest()
@@ -31,6 +31,11 @@ namespace _3._4ExcelColumns.Tests
         public void TestForZero()
         {
             Assert.AreEqual("", ExcelComumns.ColumnName(0));
+        }
+        [TestMethod()]
+        public void TestForAZ()
+        {
+            Assert.AreEqual("AZ", ExcelComumns.ColumnName(52));
         }
     }
 }

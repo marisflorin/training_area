@@ -23,7 +23,7 @@ namespace _3._4ExcelColumns
             string basechars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             int numberofchars = 26;
             string columnname = "";
-            while (IsRemainder(columnindex,numberofchars))
+            while (IsRemainder(columnindex,numberofchars) || columnindex/numberofchars>=1)
             {
                 ConvertRemainder(ref columnindex,numberofchars, basechars, ref columnname);
             }
@@ -37,8 +37,16 @@ namespace _3._4ExcelColumns
 
         private static void ConvertRemainder(ref int columnindex, int numberofchars, string alphabet, ref string columnname)
         {
-            AddCharacter(columnindex % numberofchars, alphabet, ref columnname);
-            columnindex = columnindex / numberofchars;
+            if (columnindex % numberofchars == 0)
+            {
+                AddCharacter(numberofchars, alphabet, ref columnname);
+                columnindex = columnindex / numberofchars-1;
+            }
+            else
+            {
+                AddCharacter(columnindex % numberofchars, alphabet, ref columnname);
+                columnindex = columnindex / numberofchars;
+            }
         }
 
         private static void AddCharacter(int alphabetindex, string alphabet, ref string columnname)
