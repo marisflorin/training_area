@@ -37,16 +37,21 @@ namespace _3._4ExcelColumns
 
         private static void ConvertRemainder(ref int columnindex, int numberofchars, string alphabet, ref string columnname)
         {
-            if (columnindex % numberofchars == 0)
+            if (IsNoRemainder(columnindex, numberofchars))
             {
                 AddCharacter(numberofchars, alphabet, ref columnname);
-                columnindex = columnindex / numberofchars-1;
+                columnindex = columnindex / numberofchars - 1;
             }
             else
             {
                 AddCharacter(columnindex % numberofchars, alphabet, ref columnname);
                 columnindex = columnindex / numberofchars;
             }
+        }
+
+        private static bool IsNoRemainder(int columnindex, int numberofchars)
+        {
+            return columnindex % numberofchars == 0;
         }
 
         private static void AddCharacter(int alphabetindex, string alphabet, ref string columnname)
