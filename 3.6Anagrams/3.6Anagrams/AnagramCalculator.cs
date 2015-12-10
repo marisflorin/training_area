@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace _3._6Anagrams
 {
+    //  Anagrame
+    // Pentru un cuvânt dat calculează numărul de anagramări posibile.
+    // Nu trebuie ca cuvintele rezultate să existe în dicționar. 
+    // Anagramările nu trebuie să se repete și nu trebuie generate anagramările, 
+    // doar să se calculeze numărul lor.
   public  class AnagramCalculator
     {
         static void Main(string[] args)
