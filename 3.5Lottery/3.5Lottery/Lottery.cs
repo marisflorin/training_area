@@ -19,7 +19,9 @@ public class Lottery
         }
     public static double CalculateChance(int totalnumbers,int pickednumbers,int category=1)
         {
-            return ConvertToPercentRounded(totalnumbers, pickednumbers,category);
+            if (totalnumbers > 0 && pickednumbers >0 && totalnumbers>=pickednumbers && category>0 && pickednumbers>category)
+                return ConvertToPercentRounded(totalnumbers, pickednumbers,category);
+            return 0;
 
         }
 
