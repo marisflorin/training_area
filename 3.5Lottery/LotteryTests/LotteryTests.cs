@@ -38,7 +38,7 @@ namespace _3._5Lottery.Tests
             Assert.AreEqual(0.000151974, Lottery.CalculateChance(40, 5));
         }
         [TestMethod()]
-        public void Error()
+        public void OneHundredPercent()
         {
             Assert.AreEqual(100, Lottery.CalculateChance(6, 6));
         }

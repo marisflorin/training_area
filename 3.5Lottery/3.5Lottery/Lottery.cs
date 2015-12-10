@@ -19,10 +19,15 @@ public class Lottery
         }
     public static double CalculateChance(int totalnumbers,int pickednumbers,int category=1)
         {
-            if (totalnumbers > 0 && pickednumbers >0 && totalnumbers>=pickednumbers && category>0 && pickednumbers>category)
-                return ConvertToPercentRounded(totalnumbers, pickednumbers,category);
+            if (AreValidValues(totalnumbers, pickednumbers, category))
+                return ConvertToPercentRounded(totalnumbers, pickednumbers, category);
             return 0;
 
+        }
+
+        private static bool AreValidValues(int totalnumbers, int pickednumbers, int category)
+        {
+            return totalnumbers > 0 && pickednumbers > 0 && totalnumbers >= pickednumbers && category > 0 && pickednumbers > category;
         }
 
         private static double ConvertToPercentRounded(int totalnumbers, int pickednumbers,int category)
