@@ -19,15 +19,25 @@ public class Lottery
         }
     public static double CalculateChance(int totalnumbers,int pickednumbers)
         {
-            return Factorial(totalnumbers-1);
-            
+            return ConvertToPercentRounded(totalnumbers, pickednumbers);
+
         }
 
-        private static int Factorial(int totalnumbers)
+        private static double ConvertToPercentRounded(int totalnumbers, int pickednumbers)
         {
-            int f = 0;
+            return Math.Round(1 / Combinations(totalnumbers, pickednumbers) * 100,9);
+        }
+
+        private static double Combinations(int n,int k)
+        {
+            return Factorial(n)/(Factorial(k)*Factorial(n-k));
+        }
+
+        private static double Factorial(decimal totalnumbers)
+        {
+            double f = 1;
             for (int i = 1; i <= totalnumbers; i++)
-                f += i;
+                f *= i;
             return f;
         }
     }

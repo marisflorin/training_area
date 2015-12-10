@@ -12,5 +12,10 @@ namespace _3._5Lottery.Tests
         {
             Assert.AreEqual(10,Lottery.CalculateChance(5,2));
         }
+        [TestMethod()]
+        public void SixFrom49Test()
+        {
+            Assert.AreEqual(0.000007151, Lottery.CalculateChance(49, 6));
+        }
     }
 }
