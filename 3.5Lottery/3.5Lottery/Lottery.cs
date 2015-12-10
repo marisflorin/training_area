@@ -17,15 +17,30 @@ public class Lottery
         static void Main(string[] args)
         {
         }
-    public static double CalculateChance(int totalnumbers,int pickednumbers)
+    public static double CalculateChance(int totalnumbers,int pickednumbers,int category=1)
         {
-            return ConvertToPercentRounded(totalnumbers, pickednumbers);
+            return ConvertToPercentRounded(totalnumbers, pickednumbers,category);
 
         }
 
-        private static double ConvertToPercentRounded(int totalnumbers, int pickednumbers)
+        private static double ConvertToPercentRounded(int totalnumbers, int pickednumbers,int category)
         {
-            return Math.Round(1 / Combinations(totalnumbers, pickednumbers) * 100,9);
+            return Math.Round(Probability(totalnumbers, pickednumbers,category), 9);
+        }
+
+        private static double Probability(int totalnumbers, int pickednumbers,int category)
+        {
+            return PickedNumCombinations(pickednumbers, category) * RestOfNumCombinations(totalnumbers, pickednumbers, category) / Combinations(totalnumbers, pickednumbers) * 100;
+        }
+
+        private static double RestOfNumCombinations(int totalnumbers, int pickednumbers, int category)
+        {
+            return Combinations(totalnumbers - pickednumbers, category - 1);
+        }
+
+        private static double PickedNumCombinations(int pickednumbers, int category)
+        {
+            return Combinations(pickednumbers, pickednumbers - category + 1);
         }
 
         private static double Combinations(int n,int k)
