@@ -10,12 +10,12 @@ namespace _3._6Anagrams.Tests
         [TestMethod()]
         public void AnagramABTest()
         {
-            Assert.AreEqual(1,AnagramCalculator.CalculateAnagramNum("ab"));
+            Assert.AreEqual(2,AnagramCalculator.CalculateAnagramNum("ab"));
         }
         [TestMethod()]
         public void AnagramABCTestt()
         {
-            Assert.AreEqual(5, AnagramCalculator.CalculateAnagramNum("abc"));
+            Assert.AreEqual(6, AnagramCalculator.CalculateAnagramNum("abc"));
         }
         [TestMethod()]
         public void AnagramVoid()
@@ -25,8 +25,22 @@ namespace _3._6Anagrams.Tests
         [TestMethod()]
         public void AnagramLetter()
         {
-            Assert.AreEqual(0, AnagramCalculator.CalculateAnagramNum("A"));
+            Assert.AreEqual(1, AnagramCalculator.CalculateAnagramNum("A"));
         }
-
+        [TestMethod()]
+        public void AnagramRepeatingLetters()
+        {
+            Assert.AreEqual(3, AnagramCalculator.CalculateAnagramNum("aab"));
+        }
+        [TestMethod()]
+        public void AnagramCapitalLetters()
+        {
+            Assert.AreEqual(3, AnagramCalculator.CalculateAnagramNum("Aab"));
+        }
+        [TestMethod()]
+        public void AnagramMoreWordsTest()
+        {
+            Assert.AreEqual(0, AnagramCalculator.CalculateAnagramNum("Aa bb"));
+        }
     }
 }
