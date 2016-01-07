@@ -12,52 +12,20 @@ namespace _4._1BaseConversion.Tests
         [TestMethod()]
         public void ConvertToBitTestfor156()
         {
-            List<byte> first = new List<byte>();
-            for (int i = 0; i < BaseConversion.ConvertToBit(156).Length; i++)
-            {
-                first.Add(BaseConversion.ConvertToBit(156)[i]);
-            }
 
-            List<byte> second = new List<byte>();
-            second.Add(1);
-            second.Add(0);
-            second.Add(0);
-            second.Add(1);
-            second.Add(1);
-            second.Add(1);
-            second.Add(0);
-            second.Add(0);
-
-            CollectionAssert.AreEqual(first, second);
+            byte[] firstArray=new byte[8]; BaseConversion.ConvertToBit(156,ref firstArray);
+            byte[] secondArray = { 1, 0, 0, 1, 1, 1, 0, 0 };
+       
+            CollectionAssert.AreEqual(firstArray, secondArray);
           }
         [TestMethod()]
-        public void ConvertToBitTestfor2500()
+        public void ConvertToBitTestfor70000()
         {
-            List<byte> first = new List<byte>();
-            for (int i = 0; i < BaseConversion.ConvertToBit(2500).Length; i++)
-            {
-                first.Add(BaseConversion.ConvertToBit(2500)[i]);
-            }
-            
-            List<byte> second = new List<byte>();
-            second.Add(0);
-            second.Add(0);
-            second.Add(0);
-            second.Add(0);
-            second.Add(1);
-            second.Add(0);
-            second.Add(0);
-            second.Add(1);
-            second.Add(1);
-            second.Add(1);
-            second.Add(0);
-            second.Add(0);
-            second.Add(0);
-            second.Add(1);
-            second.Add(0);
-            second.Add(0);
 
-            CollectionAssert.AreEqual(first, second);
+            byte[] firstArray = new byte[8]; BaseConversion.ConvertToBit(70000, ref firstArray);
+            byte[] secondArray = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,1,1,1,0,0,0,0 };
+
+            CollectionAssert.AreEqual(firstArray, secondArray);
         }
     }
 }

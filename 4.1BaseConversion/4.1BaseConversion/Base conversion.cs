@@ -22,37 +22,48 @@ namespace _4._1BaseConversion
         static void Main(string[] args)
         {
         }
-    public static byte[] ConvertToBit(int number)
+        byte[]converted = new byte[8];
+    public static void ConvertToBit(int number,ref byte[] converted)
         {
-            byte[] converted = new byte[8];
-            int i = 1;
+           int i = 1;
  
             while (number/2!=0 || number%2!=0)
             {
-                if (IsShortArray(converted, i))
-                {
-                    Array.Resize(ref converted, converted.Length * 2);
-                    RightHandShift(converted, converted.Length / 2, converted.Length / 2-1);
-                    FillInZeros(converted, converted.Length / 2 - 1);
-                }
-                int position = converted.Length - i;
-                if (number % 2 == 1) converted[position] = 1;
-                else converted[position] = 0;
+                if (IsShortArray(converted, i)) converted = DoubleBitNumber(converted);
+                int index = GetCurrentIndex(converted, i);
+                if (number % 2 == 1) converted[index] = 1;
+                else converted[index] = 0;
                 number = number / 2;
                 i++;
+            }
+        }
+       
+        private static int GetCurrentIndex(byte[] converted, int i)
+        {
+            return converted.Length - i;
+        }
 
-
+        private static byte[] DoubleBitNumber(byte[] converted)
+        {
+            {
+                int pos = converted.Length;
+                Array.Resize(ref converted, converted.Length * 2);
+                RightHandShift(converted, pos);
+                FillInZeros(converted, pos - 1);
             }
 
-
             return converted;
+
         }
-        private static void RightHandShift(byte[] array, int positionsJumped, int startingIndex)
+
+        private static void RightHandShift(byte[] array, int positionsJumped)
         {
-        for (int i = startingIndex;i>=0;i--)
+            int firstShiftedIndex = array.Length - positionsJumped - 1;
+            for (int i = firstShiftedIndex;i>=0;i--)
             {
                 array[i + positionsJumped] = array[i];
             }
+            FillInZeros(array, positionsJumped);
         }
         private static void FillInZeros(byte[] array,int finishingIndex, int beginingIndex=0)
         {
