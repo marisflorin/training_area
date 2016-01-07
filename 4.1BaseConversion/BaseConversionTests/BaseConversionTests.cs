@@ -31,22 +31,29 @@ namespace _4._1BaseConversion.Tests
             CollectionAssert.AreEqual(first, second);
           }
         [TestMethod()]
-        public void ConvertToBitTestfor256()
+        public void ConvertToBitTestfor2500()
         {
             List<byte> first = new List<byte>();
-            for (int i = 0; i < BaseConversion.ConvertToBit(256).Length; i++)
+            for (int i = 0; i < BaseConversion.ConvertToBit(2500).Length; i++)
             {
-                first.Add(BaseConversion.ConvertToBit(256)[i]);
+                first.Add(BaseConversion.ConvertToBit(2500)[i]);
             }
-
+            
             List<byte> second = new List<byte>();
+            second.Add(0);
+            second.Add(0);
+            second.Add(0);
+            second.Add(0);
+            second.Add(1);
+            second.Add(0);
+            second.Add(0);
+            second.Add(1);
+            second.Add(1);
             second.Add(1);
             second.Add(0);
             second.Add(0);
             second.Add(0);
-            second.Add(0);
-            second.Add(0);
-            second.Add(0);
+            second.Add(1);
             second.Add(0);
             second.Add(0);
 

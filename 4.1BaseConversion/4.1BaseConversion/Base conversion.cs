@@ -29,19 +29,42 @@ namespace _4._1BaseConversion
  
             while (number/2!=0 || number%2!=0)
             {
+                if (IsShortArray(converted, i))
+                {
+                    Array.Resize(ref converted, converted.Length * 2);
+                    RightHandShift(converted, converted.Length / 2, converted.Length / 2-1);
+                    FillInZeros(converted, converted.Length / 2 - 1);
+                }
                 int position = converted.Length - i;
                 if (number % 2 == 1) converted[position] = 1;
                 else converted[position] = 0;
                 number = number / 2;
                 i++;
-                
-                
+
+
             }
 
 
             return converted;
         }
-      
+        private static void RightHandShift(byte[] array, int positionsJumped, int startingIndex)
+        {
+        for (int i = startingIndex;i>=0;i--)
+            {
+                array[i + positionsJumped] = array[i];
+            }
+        }
+        private static void FillInZeros(byte[] array,int finishingIndex, int beginingIndex=0)
+        {
+            for (int i = beginingIndex; i <= finishingIndex; i++)
+            {
+                array[i] = 0;
+            }
+        }
+        private static bool IsShortArray(byte[] converted, int i)
+        {
+            return i > converted.Length;
+        }
     }
 }
 
