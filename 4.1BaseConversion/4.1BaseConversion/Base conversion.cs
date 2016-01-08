@@ -22,7 +22,7 @@ namespace _4._1BaseConversion
         static void Main(string[] args)
         {
         }
-        byte[]converted = new byte[8];
+        
     public static void ConvertToBit(int number,ref byte[] converted)
         {
            int i = 1;
@@ -49,11 +49,74 @@ namespace _4._1BaseConversion
                 int pos = converted.Length;
                 Array.Resize(ref converted, converted.Length * 2);
                 RightHandShift(converted, pos);
-                FillInZeros(converted, pos - 1);
-            }
+                            }
 
             return converted;
 
+        }
+        public static void BitwiseNOT(byte[] sourceArray, ref byte[] array)
+        {
+            array = new byte[sourceArray.Length];
+            for (int i = 0; i < sourceArray.Length; i++)
+               if (sourceArray[i] == 0) array[i] = 1;
+                else array[i] = 0;
+            
+        }
+        public static void BitwiseAND(byte[] firstArray,byte[] secondArray, ref byte[] andArray)
+        {
+            if (HaveDifferentLengths(firstArray, secondArray))
+                MakeEqualLength(ref firstArray, ref secondArray);          
+            andArray = new byte[firstArray.Length];
+            for (int i = 0; i < firstArray.Length; i++)
+                if (firstArray[i] == 1 & secondArray[i] == 1)
+                    andArray[i] = 1;
+                else andArray[i] = 0;
+
+        }
+        public static void BitwiseOR(byte[] firstArray, byte[] secondArray, ref byte[] orArray)
+        {
+            if (HaveDifferentLengths(firstArray, secondArray))
+                MakeEqualLength(ref firstArray, ref secondArray);
+            orArray = new byte[firstArray.Length];
+            for (int i = 0; i < firstArray.Length; i++)
+                if (firstArray[i] == 1 || secondArray[i] == 1)
+                    orArray[i] = 1;
+                else orArray[i] = 0;
+
+        }
+        public static void BitwiseXOR(byte[] firstArray, byte[] secondArray, ref byte[] xorArray)
+        {
+            if (HaveDifferentLengths(firstArray, secondArray))
+                MakeEqualLength(ref firstArray, ref secondArray);
+            xorArray = new byte[firstArray.Length];
+            for (int i = 0; i < firstArray.Length; i++)
+                if (firstArray[i] != secondArray[i])
+                    xorArray[i] = 1;
+                else xorArray[i] = 0;
+
+        }
+        private static void MakeEqualLength(ref byte[] firstArray, ref byte[] secondArray)
+        {
+            if (firstArray.Length > secondArray.Length)
+                secondArray = MakeSameLength(firstArray,ref secondArray);
+            else firstArray = MakeSameLength(secondArray,ref firstArray);
+        }
+
+        private static bool HaveDifferentLengths(byte[] firstArray, byte[] secondArray)
+        {
+            return firstArray.Length != secondArray.Length;
+        }
+
+        private static byte[] MakeSameLength(byte[] longArray,ref  byte[] shortArray)
+        {
+            {
+                int posToShift = longArray.Length-shortArray.Length;
+                Array.Resize(ref shortArray, longArray.Length);
+                RightHandShift(shortArray, posToShift);
+
+            }
+
+            return shortArray;
         }
 
         private static void RightHandShift(byte[] array, int positionsJumped)
@@ -67,7 +130,7 @@ namespace _4._1BaseConversion
         }
         private static void FillInZeros(byte[] array,int finishingIndex, int beginingIndex=0)
         {
-            for (int i = beginingIndex; i <= finishingIndex; i++)
+            for (int i = beginingIndex; i < finishingIndex; i++)
             {
                 array[i] = 0;
             }
