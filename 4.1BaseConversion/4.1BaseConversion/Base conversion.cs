@@ -29,7 +29,7 @@ namespace _4._1BaseConversion
  
             while (number/2!=0 || number%2!=0)
             {
-                if (IsShortArray(converted, i)) converted = DoubleBitNumber(converted);
+                if (IsShortArray(converted, i)) converted = DoubleBitNumber(ref converted);
                 int index = GetCurrentIndex(converted, i);
                 if (number % 2 == 1) converted[index] = 1;
                 else converted[index] = 0;
@@ -43,12 +43,12 @@ namespace _4._1BaseConversion
             return converted.Length - i;
         }
 
-        private static byte[] DoubleBitNumber(byte[] converted)
+        private static byte[] DoubleBitNumber(ref byte[] converted)
         {
             {
                 int pos = converted.Length;
                 Array.Resize(ref converted, converted.Length * 2);
-                RightHandShift(converted, pos);
+                RightHandShift(ref converted, pos);
             }
 
             return converted;
@@ -99,14 +99,36 @@ namespace _4._1BaseConversion
             return bit;            
         }
 
-        private static void RightHandShift(byte[] array, int positionsJumped)
+        public static void RightHandShift(ref byte[] array, int positionsJumped)
         {
             int firstShiftedIndex = array.Length - positionsJumped - 1;
-            for (int i = firstShiftedIndex;i>=0;i--)
-            {
-                array[i + positionsJumped] = array[i];
-            }
-            FillInZeros(array, positionsJumped);
+            if (firstShiftedIndex >= 0)
+            { 
+             for (int i = firstShiftedIndex; i >= 0; i--)
+                {
+                    array[i + positionsJumped] = array[i];
+                }
+                FillInZeros(array, positionsJumped);
+             }
+            else FillInZeros(array, array.Length);
+        }
+        public static void LeftHandShift(ref byte[] array, int positionsJumped)
+        {
+            while (IsShortToShift(array, positionsJumped)) DoubleBitNumber(ref array);
+            for (int i = 0; i < array.Length-positionsJumped; i++)
+                array[i] = array[i + positionsJumped];
+            FillInZeros(array, array.Length , array.Length-positionsJumped);
+        }
+
+        private static bool IsShortToShift(byte[] array, int positionsJumped)
+        {
+            return FindIndexOfFirst1(array) < positionsJumped;
+        }
+        public static int FindIndexOfFirst1(byte[] array)
+        {
+            for (int i = 0; i < array.Length; i++) 
+            if (array[i] == 1) return i;
+            return -1;
         }
 
         private static void FillInZeros(byte[] array,int finishingIndex, int beginingIndex=0)

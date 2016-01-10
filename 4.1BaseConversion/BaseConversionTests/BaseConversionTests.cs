@@ -11,7 +11,7 @@ namespace _4._1BaseConversion.Tests
     {
         [TestMethod()]
         public void ConvertToBitTestfor156()
-        {
+        { 
 
             byte[] firstArray = new byte[8];
             BaseConversion.ConvertToBit(156, ref firstArray);
@@ -79,6 +79,22 @@ namespace _4._1BaseConversion.Tests
             secondArray = new byte[8];
             BaseConversion.ConvertToBit(secondNumber, ref secondArray);
             resultArray = new byte[8];
+        }
+        [TestMethod()]
+        public void TestRightHandShift8()
+        {
+            byte[] testArray = {0, 1, 1, 0, 1, 1, 1, 0 }; 
+            BaseConversion.RightHandShift(ref testArray, 8);
+            byte[] shiftedArray = { 0, 0, 0, 0, 0, 0, 0, 0 };
+            CollectionAssert.AreEqual(testArray, shiftedArray);
+        }
+        [TestMethod()]
+        public void TestLeftHandShift3()
+        {
+            byte[] testArray = {1, 1, 1, 1 };
+            BaseConversion.LeftHandShift(ref testArray, 4);
+            byte[] shiftedArray = { 1, 1, 1, 1, 0, 0, 0, 0 };
+            CollectionAssert.AreEqual(testArray, shiftedArray);
         }
     }
 }
