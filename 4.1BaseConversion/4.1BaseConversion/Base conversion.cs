@@ -49,7 +49,7 @@ namespace _4._1BaseConversion
                 int pos = converted.Length;
                 Array.Resize(ref converted, converted.Length * 2);
                 RightHandShift(converted, pos);
-                            }
+            }
 
             return converted;
 
@@ -58,65 +58,45 @@ namespace _4._1BaseConversion
         {
             array = new byte[sourceArray.Length];
             for (int i = 0; i < sourceArray.Length; i++)
-               if (sourceArray[i] == 0) array[i] = 1;
-                else array[i] = 0;
-            
+                array[i] = sourceArray[i] == 0 ? (byte)1 : (byte)0;           
         }
-        public static void BitwiseAND(byte[] firstArray,byte[] secondArray, ref byte[] andArray)
+        public static void BitwiseOPS(byte[] firstArray,byte[] secondArray, ref byte[] andArray,char op)
         {
-            if (HaveDifferentLengths(firstArray, secondArray))
-                MakeEqualLength(ref firstArray, ref secondArray);          
-            andArray = new byte[firstArray.Length];
-            for (int i = 0; i < firstArray.Length; i++)
-                if (firstArray[i] == 1 & secondArray[i] == 1)
-                    andArray[i] = 1;
-                else andArray[i] = 0;
-
-        }
-        public static void BitwiseOR(byte[] firstArray, byte[] secondArray, ref byte[] orArray)
-        {
-            if (HaveDifferentLengths(firstArray, secondArray))
-                MakeEqualLength(ref firstArray, ref secondArray);
-            orArray = new byte[firstArray.Length];
-            for (int i = 0; i < firstArray.Length; i++)
-                if (firstArray[i] == 1 || secondArray[i] == 1)
-                    orArray[i] = 1;
-                else orArray[i] = 0;
-
-        }
-        public static void BitwiseXOR(byte[] firstArray, byte[] secondArray, ref byte[] xorArray)
-        {
-            if (HaveDifferentLengths(firstArray, secondArray))
-                MakeEqualLength(ref firstArray, ref secondArray);
-            xorArray = new byte[firstArray.Length];
-            for (int i = 0; i < firstArray.Length; i++)
-                if (firstArray[i] != secondArray[i])
-                    xorArray[i] = 1;
-                else xorArray[i] = 0;
-
-        }
-        private static void MakeEqualLength(ref byte[] firstArray, ref byte[] secondArray)
-        {
-            if (firstArray.Length > secondArray.Length)
-                secondArray = MakeSameLength(firstArray,ref secondArray);
-            else firstArray = MakeSameLength(secondArray,ref firstArray);
-        }
-
-        private static bool HaveDifferentLengths(byte[] firstArray, byte[] secondArray)
-        {
-            return firstArray.Length != secondArray.Length;
-        }
-
-        private static byte[] MakeSameLength(byte[] longArray,ref  byte[] shortArray)
-        {
+            int length = GetBiggestLength(firstArray, secondArray);
+            andArray = new byte[length];
+            for (ushort i = 0; i < length; i++)
             {
-                int posToShift = longArray.Length-shortArray.Length;
-                Array.Resize(ref shortArray, longArray.Length);
-                RightHandShift(shortArray, posToShift);
-
+                int pos = length - i - 1;
+                switch (op)
+                {
+                    case '&':
+                        andArray[pos] = AddElements(firstArray, secondArray, i) == 2 ? (byte)1 : (byte)0;
+                        break;
+                    case '|':
+                        andArray[pos] = AddElements(firstArray, secondArray, i) != 0 ? (byte)1 : (byte)0;
+                        break;
+                    case '^':
+                        andArray[pos] = AddElements(firstArray, secondArray, i) == 1 ? (byte)1 : (byte)0;
+                        break;
+                }
             }
+        }
 
-            return shortArray;
+        private static int AddElements(byte[] firstArray, byte[] secondArray, ushort i)
+        {
+            return GetBitAtIndex(firstArray, i) +
+                                GetBitAtIndex(secondArray, i);
+        }
+
+        private static int GetBiggestLength(byte[] firstArray, byte[] secondArray)
+        {
+            return firstArray.Length >= secondArray.Length ? firstArray.Length : secondArray.Length;
+        }
+
+        public static byte GetBitAtIndex(byte[] arrayOfBits, ushort index)
+        {
+            byte bit = index < arrayOfBits.Length ? arrayOfBits[arrayOfBits.Length - index - 1] : (byte)0;
+            return bit;            
         }
 
         private static void RightHandShift(byte[] array, int positionsJumped)
@@ -128,6 +108,7 @@ namespace _4._1BaseConversion
             }
             FillInZeros(array, positionsJumped);
         }
+
         private static void FillInZeros(byte[] array,int finishingIndex, int beginingIndex=0)
         {
             for (int i = beginingIndex; i < finishingIndex; i++)

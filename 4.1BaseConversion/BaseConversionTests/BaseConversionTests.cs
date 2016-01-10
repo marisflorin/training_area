@@ -45,12 +45,9 @@ namespace _4._1BaseConversion.Tests
         public void TestBitwiseANDfor300and200()
         {
 
-            byte[] firstArray = new byte[8];
-            BaseConversion.ConvertToBit(300, ref firstArray);
-            byte[] secondArray = new byte[8];
-            BaseConversion.ConvertToBit(200, ref secondArray);
-            byte[] resultArray = new byte[8];
-            BaseConversion.BitwiseAND(firstArray, secondArray, ref resultArray);
+            byte[] firstArray, secondArray, resultArray;
+            BuildArrays(300, 200, out firstArray, out secondArray, out resultArray);
+            BaseConversion.BitwiseOPS(firstArray, secondArray, ref resultArray,'&');
             byte[] andArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
 
             CollectionAssert.AreEqual(resultArray, andArray);
@@ -59,29 +56,29 @@ namespace _4._1BaseConversion.Tests
         public void TestBitwiseORfor300and200()
         {
 
-            byte[] firstArray = new byte[8];
-            BaseConversion.ConvertToBit(300, ref firstArray);
-            byte[] secondArray = new byte[8];
-            BaseConversion.ConvertToBit(200, ref secondArray);
-            byte[] resultArray = new byte[8];
-            BaseConversion.BitwiseOR(firstArray, secondArray, ref resultArray);
+            byte[] firstArray, secondArray, resultArray;
+            BuildArrays(300,200,out firstArray,out secondArray, out resultArray);
+            BaseConversion.BitwiseOPS(firstArray, secondArray, ref resultArray,'|');
             byte[] orArray = { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0 };
-
             CollectionAssert.AreEqual(resultArray, orArray);
         }
         [TestMethod()]
-        public void TestBitwiseXORfor300and200()
+        public void TestBitwiseXORfor10and2()
         {
-
-            byte[] firstArray = new byte[8];
-            BaseConversion.ConvertToBit(2, ref firstArray);
-            byte[] secondArray = new byte[8];
-            BaseConversion.ConvertToBit(10, ref secondArray);
-            byte[] resultArray = new byte[8];
-            BaseConversion.BitwiseXOR(firstArray, secondArray, ref resultArray);
-            byte[] xorArray = { 0, 0, 0, 0, 1, 0, 0, 0};
-
+            byte[] firstArray, secondArray, resultArray;
+            BuildArrays(10,2,out firstArray, out secondArray,out resultArray);
+            BaseConversion.BitwiseOPS(firstArray, secondArray, ref resultArray, '^');
+            byte[] xorArray = { 0, 0, 0, 0, 1, 0, 0, 0 };
             CollectionAssert.AreEqual(resultArray, xorArray);
+        }
+
+        private static void BuildArrays(int firstNumber,int secondNumber, out byte[] firstArray,out byte[] secondArray,out byte[] resultArray)
+        {
+            firstArray = new byte[8];
+            BaseConversion.ConvertToBit(firstNumber, ref firstArray);
+            secondArray = new byte[8];
+            BaseConversion.ConvertToBit(secondNumber, ref secondArray);
+            resultArray = new byte[8];
         }
     }
 }
