@@ -17,17 +17,17 @@ namespace _4._1BaseConversion
   Doar pentru numere pozitive.
   Poți generaliza transformarea și operațiile de la 3-6 pentru o bază aleatoare (baza fiind între 2 și 255)?
   */
-   public class BaseConversion
+    public class BaseConversion
     {
         static void Main(string[] args)
         {
         }
-        
-    public static void ConvertToBit(int number,ref byte[] converted)
+
+        public static void ConvertToBit(int number, ref byte[] converted)
         {
-           int i = 1;
- 
-            while (number/2!=0 || number%2!=0)
+            int i = 1;
+
+            while (number / 2 != 0 || number % 2 != 0)
             {
                 if (IsShortArray(converted, i)) converted = DoubleBitNumber(ref converted);
                 int index = GetCurrentIndex(converted, i);
@@ -37,7 +37,7 @@ namespace _4._1BaseConversion
                 i++;
             }
         }
-       
+
         private static int GetCurrentIndex(byte[] converted, int i)
         {
             return converted.Length - i;
@@ -58,9 +58,9 @@ namespace _4._1BaseConversion
         {
             array = new byte[sourceArray.Length];
             for (int i = 0; i < sourceArray.Length; i++)
-                array[i] = sourceArray[i] == 0 ? (byte)1 : (byte)0;           
+                array[i] = sourceArray[i] == 0 ? (byte)1 : (byte)0;
         }
-        public static void BitwiseOPS(byte[] firstArray,byte[] secondArray, ref byte[] andArray,char op)
+        public static void BitwiseOPS(byte[] firstArray, byte[] secondArray, ref byte[] andArray, char op)
         {
             int length = GetBiggestLength(firstArray, secondArray);
             andArray = new byte[length];
@@ -96,28 +96,28 @@ namespace _4._1BaseConversion
         public static byte GetBitAtIndex(byte[] arrayOfBits, ushort index)
         {
             byte bit = index < arrayOfBits.Length ? arrayOfBits[arrayOfBits.Length - index - 1] : (byte)0;
-            return bit;            
+            return bit;
         }
 
         public static void RightHandShift(ref byte[] array, int positionsJumped)
         {
             int firstShiftedIndex = array.Length - positionsJumped - 1;
             if (firstShiftedIndex >= 0)
-            { 
-             for (int i = firstShiftedIndex; i >= 0; i--)
+            {
+                for (int i = firstShiftedIndex; i >= 0; i--)
                 {
                     array[i + positionsJumped] = array[i];
                 }
                 FillInZeros(array, positionsJumped);
-             }
+            }
             else FillInZeros(array, array.Length);
         }
         public static void LeftHandShift(ref byte[] array, int positionsJumped)
         {
             while (IsShortToShift(array, positionsJumped)) DoubleBitNumber(ref array);
-            for (int i = 0; i < array.Length-positionsJumped; i++)
+            for (int i = 0; i < array.Length - positionsJumped; i++)
                 array[i] = array[i + positionsJumped];
-            FillInZeros(array, array.Length , array.Length-positionsJumped);
+            FillInZeros(array, array.Length, array.Length - positionsJumped);
         }
 
         private static bool IsShortToShift(byte[] array, int positionsJumped)
@@ -126,12 +126,12 @@ namespace _4._1BaseConversion
         }
         public static int FindIndexOfFirst1(byte[] array)
         {
-            for (int i = 0; i < array.Length; i++) 
-            if (array[i] == 1) return i;
+            for (int i = 0; i < array.Length; i++)
+                if (array[i] == 1) return i;
             return -1;
         }
 
-        private static void FillInZeros(byte[] array,int finishingIndex, int beginingIndex=0)
+        private static void FillInZeros(byte[] array, int finishingIndex, int beginingIndex = 0)
         {
             for (int i = beginingIndex; i < finishingIndex; i++)
             {
@@ -141,6 +141,21 @@ namespace _4._1BaseConversion
         private static bool IsShortArray(byte[] converted, int i)
         {
             return i > converted.Length;
+        }
+        public static bool LessThan(byte[] smallArray,byte[] bigArray)
+        {
+            bool isLessThan = false;           
+            int length = GetBiggestLength(smallArray, bigArray);
+            length--;
+            for (int i = length; i >= 0; i--)
+                if (GetBitAtIndex(bigArray, (ushort)i) > GetBitAtIndex(smallArray, (ushort)i))
+                {
+                    isLessThan = true;
+                    break;
+                }
+                else if (GetBitAtIndex(bigArray, (ushort)i) < GetBitAtIndex(smallArray, (ushort)i)) break;
+                    return isLessThan ;
+
         }
     }
 }

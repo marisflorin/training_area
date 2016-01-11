@@ -96,5 +96,21 @@ namespace _4._1BaseConversion.Tests
             byte[] shiftedArray = { 1, 1, 1, 1, 0, 0, 0, 0 };
             CollectionAssert.AreEqual(testArray, shiftedArray);
         }
+        [TestMethod()]
+        public void TestLessThan()
+        {
+            byte[] smallArray = { 0,0, 0, 1,1};
+            byte[] bigArray = { 0, 0, 1, 0 };
+            Assert.AreEqual(false, BaseConversion.LessThan(smallArray,bigArray));
+        }
+        [TestMethod()]
+        public void TestLessThan200and300()
+        {
+            byte[] smallArray= new byte[8];
+            BaseConversion.ConvertToBit(300, ref smallArray);
+            byte[] bigArray = new byte[8];
+            BaseConversion.ConvertToBit(200, ref bigArray);       
+            Assert.AreEqual(false, BaseConversion.LessThan(smallArray, bigArray));
+        }
     }
 }
