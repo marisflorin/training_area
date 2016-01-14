@@ -112,5 +112,42 @@ namespace _4._1BaseConversion.Tests
             BaseConversion.ConvertToBit(200, ref bigArray);       
             Assert.AreEqual(false, BaseConversion.LessThan(smallArray, bigArray));
         }
+        [TestMethod()]
+        public void TestAddition100and65436()
+        {
+            byte[] firstArray, secondArray, resultArray, additionArray;
+            GenerateArrays(100,65436,65536,out firstArray, out secondArray, out resultArray);
+            additionArray = new byte[8];
+            BaseConversion.Addition(firstArray, secondArray, ref additionArray);
+            CollectionAssert.AreEqual(resultArray, additionArray);
+        }
+        [TestMethod()]
+        public void Testsubstraction8000and7999()
+        {
+            byte[] minuedArray, substractedArray, resultArray, differenceArray;
+            GenerateArrays(8000, 7999, 1, out minuedArray, out substractedArray, out resultArray);
+            differenceArray = new byte[8];
+            BaseConversion.Substraction(minuedArray, substractedArray, ref differenceArray);
+            CollectionAssert.AreEqual(resultArray, differenceArray);
+        }
+        [TestMethod()]
+        public void Testsubstraction256and1()
+        {
+            byte[] minuedArray, substractedArray, resultArray, differenceArray;
+            GenerateArrays(256, 1, 255, out minuedArray, out substractedArray, out resultArray);
+            differenceArray = new byte[8];
+            BaseConversion.Substraction(minuedArray, substractedArray, ref differenceArray);
+            CollectionAssert.AreEqual(resultArray, differenceArray);
+        }
+        private static void GenerateArrays(int first, int second,int result, out byte[] firstArray, out byte[] secondArray, out byte[] resultArray)
+        {
+            firstArray = new byte[8];
+            BaseConversion.ConvertToBit(first, ref firstArray);
+            secondArray = new byte[8];
+            BaseConversion.ConvertToBit(second, ref secondArray);
+            resultArray = new byte[8];
+            BaseConversion.ConvertToBit(result, ref resultArray);
+          
+        }
     }
 }

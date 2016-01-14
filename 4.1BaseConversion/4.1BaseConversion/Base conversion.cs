@@ -82,10 +82,9 @@ namespace _4._1BaseConversion
             }
         }
 
-        private static int AddElements(byte[] firstArray, byte[] secondArray, ushort i)
+        private static int AddElements(byte[] firstArray, byte[] secondArray, ushort i,sbyte sign=1)
         {
-            return GetBitAtIndex(firstArray, i) +
-                                GetBitAtIndex(secondArray, i);
+            return GetBitAtIndex(firstArray, i) + GetBitAtIndex(secondArray, i)*sign;
         }
 
         private static int GetBiggestLength(byte[] firstArray, byte[] secondArray)
@@ -142,9 +141,9 @@ namespace _4._1BaseConversion
         {
             return i > converted.Length;
         }
-        public static bool LessThan(byte[] smallArray,byte[] bigArray)
+        public static bool LessThan(byte[] smallArray, byte[] bigArray)
         {
-            bool isLessThan = false;           
+            bool isLessThan = false;
             int length = GetBiggestLength(smallArray, bigArray);
             length--;
             for (int i = length; i >= 0; i--)
@@ -154,8 +153,78 @@ namespace _4._1BaseConversion
                     break;
                 }
                 else if (GetBitAtIndex(bigArray, (ushort)i) < GetBitAtIndex(smallArray, (ushort)i)) break;
-                    return isLessThan ;
+            return isLessThan;
 
+        }
+        public static void Addition(byte[] firstArray, byte[] secondArray,ref byte[] additionArray)
+            {
+            byte carrier=0;
+            int length = GetBiggestLength(firstArray, secondArray);
+            additionArray = new byte[length];
+            for (ushort i=0;i< length;i++)
+            {
+                if (Getquotient(firstArray, secondArray, carrier, i) > 0 && i == length - 1)
+                {
+                    DoubleBitNumber(ref additionArray);
+                    length = length * 2;
+                }
+                additionArray[length - i - 1] = GetRemainder(firstArray, secondArray, carrier, i);
+                carrier = Getquotient(firstArray, secondArray, carrier, i);
+            }
+           }
+
+        public static bool CompareOPS(byte[] firstArray, byte[] secondArray, char comp)
+        {
+            bool isTrue=false;
+            switch (comp)
+            {
+
+                case '>':
+                    isTrue = (!LessThan(firstArray, secondArray) && LessThan(secondArray, firstArray));
+                    break;
+                case '=':
+                    isTrue = (!LessThan(firstArray, secondArray) && !LessThan(secondArray, firstArray));
+                    break;
+                case '!':
+                    isTrue = (LessThan(firstArray, secondArray) || LessThan(secondArray, firstArray));
+                    break;
+            }
+                    return isTrue;
+            }
+        public static void Substraction(byte[] minuendArray, byte[] substractedArray, ref byte[] differenceArray)
+        {
+            differenceArray = new byte[minuendArray.Length];
+            if (CompareOPS(minuendArray, substractedArray, '>') || CompareOPS(minuendArray, substractedArray, '='))
+                for (ushort i = 0; i < minuendArray.Length; i++)
+                {
+                    if (GetBitAtIndex(minuendArray, i) < GetBitAtIndex(substractedArray, i))
+                    {
+                        ushort k = 1;
+                        while (GetBitAtIndex(minuendArray, (ushort)(i+k)) < 1) k++;
+                        minuendArray[minuendArray.Length - i - k - 1]--;                      
+                        while (k > 0)
+                        {
+                            k--;
+                            minuendArray[minuendArray.Length - i - k - 1] = 2 - 1;              
+                        }
+                        minuendArray[minuendArray.Length - i - k - 1]++;
+
+                    }
+                    differenceArray[minuendArray.Length - i - 1] = (byte)AddElements(minuendArray, substractedArray, i, -1);
+                }
+            while (FindIndexOfFirst1(differenceArray) >= differenceArray.Length/2 && differenceArray.Length > 8)
+            {
+                LeftHandShift(ref differenceArray, differenceArray.Length / 2);
+                Array.Resize(ref differenceArray, differenceArray.Length / 2);
+            } 
+        }               
+        private static byte GetRemainder(byte[] firstArray, byte[] secondArray, byte carrier, ushort i)
+        {
+            return (byte)((AddElements(firstArray, secondArray, i) + carrier) % 2);
+        }
+        private static byte Getquotient(byte[] firstArray, byte[] secondArray, byte carrier, ushort i)
+        {
+            return (byte)((AddElements(firstArray, secondArray, i) + carrier) / 2);
         }
     }
 }
