@@ -217,8 +217,19 @@ namespace _4._1BaseConversion
                 LeftHandShift(ref differenceArray, differenceArray.Length / 2);
                 Array.Resize(ref differenceArray, differenceArray.Length / 2);
             } 
-        }               
-        private static byte GetRemainder(byte[] firstArray, byte[] secondArray, byte carrier, ushort i)
+        }
+        byte[] productArray = new byte[8];
+        public static void Multiply( byte[] multiplicated,byte[] multiplier,ref byte product)
+            {
+            byte[] step = { 0, 0, 0, 0, 0, 0, 0, 1 };
+            byte[] zero = { 0, 0, 0, 0, 0, 0, 0, 0 };
+            if 
+             i<multiplier;i++)            
+                    Addition(multiplicatedArray, multiplicatedArray, ref productArray);            
+            
+}
+
+    private static byte GetRemainder(byte[] firstArray, byte[] secondArray, byte carrier, ushort i)
         {
             return (byte)((AddElements(firstArray, secondArray, i) + carrier) % 2);
         }

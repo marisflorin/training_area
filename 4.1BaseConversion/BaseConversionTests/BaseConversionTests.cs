@@ -139,6 +139,15 @@ namespace _4._1BaseConversion.Tests
             BaseConversion.Substraction(minuedArray, substractedArray, ref differenceArray);
             CollectionAssert.AreEqual(resultArray, differenceArray);
         }
+        [TestMethod()]
+        public void TestMultiplication256and1()
+        {
+            byte[] Array, substractedArray, resultArray, differenceArray;
+            GenerateArrays(256, 1, 256, out minuedArray, out substractedArray, out resultArray);
+            differenceArray = new byte[8];
+            BaseConversion.Substraction(minuedArray, substractedArray, ref differenceArray);
+            CollectionAssert.AreEqual(resultArray, differenceArray);
+        }
         private static void GenerateArrays(int first, int second,int result, out byte[] firstArray, out byte[] secondArray, out byte[] resultArray)
         {
             firstArray = new byte[8];
