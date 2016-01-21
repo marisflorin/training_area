@@ -31,8 +31,7 @@ namespace _4._1BaseConversion
             {
                 if (IsShortArray(converted, i)) converted = DoubleBitNumber(ref converted);
                 int index = GetCurrentIndex(converted, i);
-                if (number % 2 == 1) converted[index] = 1;
-                else converted[index] = 0;
+                converted[index] = (byte)(number%2) ;                
                 number = number / 2;
                 i++;
             }
@@ -175,61 +174,72 @@ namespace _4._1BaseConversion
 
         public static bool CompareOPS(byte[] firstArray, byte[] secondArray, char comp)
         {
-            bool isTrue=false;
             switch (comp)
             {
 
                 case '>':
-                    isTrue = (!LessThan(firstArray, secondArray) && LessThan(secondArray, firstArray));
-                    break;
+                   return  LessThan(secondArray, firstArray);           
                 case '=':
-                    isTrue = (!LessThan(firstArray, secondArray) && !LessThan(secondArray, firstArray));
-                    break;
+                    return (!LessThan(firstArray, secondArray) && !LessThan(secondArray, firstArray));
                 case '!':
-                    isTrue = (LessThan(firstArray, secondArray) || LessThan(secondArray, firstArray));
-                    break;
+                    return (LessThan(firstArray, secondArray) || LessThan(secondArray, firstArray));
+              }
+            return false;         
             }
-                    return isTrue;
-            }
-        public static void Substraction(byte[] minuendArray, byte[] substractedArray, ref byte[] differenceArray)
+        public static void Substraction(byte[] minuend, byte[] substracted, ref byte[] difference)
         {
-            differenceArray = new byte[minuendArray.Length];
-            if (CompareOPS(minuendArray, substractedArray, '>') || CompareOPS(minuendArray, substractedArray, '='))
-                for (ushort i = 0; i < minuendArray.Length; i++)
-                {
-                    if (GetBitAtIndex(minuendArray, i) < GetBitAtIndex(substractedArray, i))
-                    {
-                        ushort k = 1;
-                        while (GetBitAtIndex(minuendArray, (ushort)(i+k)) < 1) k++;
-                        minuendArray[minuendArray.Length - i - k - 1]--;                      
-                        while (k > 0)
-                        {
-                            k--;
-                            minuendArray[minuendArray.Length - i - k - 1] = 2 - 1;              
-                        }
-                        minuendArray[minuendArray.Length - i - k - 1]++;
-
-                    }
-                    differenceArray[minuendArray.Length - i - 1] = (byte)AddElements(minuendArray, substractedArray, i, -1);
-                }
-            while (FindIndexOfFirst1(differenceArray) >= differenceArray.Length/2 && differenceArray.Length > 8)
+            difference = new byte[minuend.Length];
+            int didBorrow = 0;
+            for (ushort i = 0; i < minuend.Length; i++)
             {
-                LeftHandShift(ref differenceArray, differenceArray.Length / 2);
-                Array.Resize(ref differenceArray, differenceArray.Length / 2);
-            } 
+                int diff = 2 + GetBitAtIndex(minuend, i) - GetBitAtIndex(substracted, i) - didBorrow;
+                difference[minuend.Length - i - 1] = (byte)(diff % 2);
+                didBorrow = diff / 2 == 0 ? 1 : 0;
+
+            }
+            difference = DownSize(difference);
         }
-        byte[] productArray = new byte[8];
-        public static void Multiply( byte[] multiplicated,byte[] multiplier,ref byte product)
+
+        private static byte[] DownSize(byte[] difference)
+        {
+            while (FindIndexOfFirst1(difference) >= difference.Length / 2 && difference.Length > 8)
+            {
+                LeftHandShift(ref difference, difference.Length / 2);
+                Array.Resize(ref difference, difference.Length / 2);
+            }
+
+            return difference;
+        }
+
+        public static void Multiply(byte[] multiplicated, byte[] multiplier, ref byte[] product)
             {
             byte[] step = { 0, 0, 0, 0, 0, 0, 0, 1 };
             byte[] zero = { 0, 0, 0, 0, 0, 0, 0, 0 };
-            if 
-             i<multiplier;i++)            
-                    Addition(multiplicatedArray, multiplicatedArray, ref productArray);            
-            
-}
-
-    private static byte GetRemainder(byte[] firstArray, byte[] secondArray, byte carrier, ushort i)
+            product = multiplicated;
+            if (CompareOPS(multiplicated, zero, '=') || CompareOPS(multiplier, zero, '=')) product = zero;
+            else while (CompareOPS(multiplier, step, '>')) 
+             {           
+                    Addition(product, multiplicated, ref product);
+                    Substraction(multiplier,step,ref multiplier);            
+             }
+            }
+        public static void Division(byte[] dividend, byte[] divisor, ref byte[] quotient)
+        {
+            byte[] step = { 0, 0, 0, 0, 0, 0, 0, 1 };
+            byte[] start = { 0, 0, 0, 0, 0, 0, 0, 1 };
+            byte[] zero = { 0, 0, 0, 0, 0, 0, 0, 0 };
+            quotient= start;
+            if (CompareOPS(dividend, zero, '=')) { quotient = zero; return; }
+            if (CompareOPS(divisor, zero, '='))
+                throw new System.ArgumentException("DIVISION BY ZERO, Divisor should not be null !");
+            else               
+            while (CompareOPS(dividend, divisor, '>'))
+                {           
+                    Substraction(dividend, divisor, ref dividend);
+                    Addition(quotient, step, ref quotient);
+                }
+        }
+        private static byte GetRemainder(byte[] firstArray, byte[] secondArray, byte carrier, ushort i)
         {
             return (byte)((AddElements(firstArray, secondArray, i) + carrier) % 2);
         }

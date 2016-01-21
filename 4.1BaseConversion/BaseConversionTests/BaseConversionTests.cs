@@ -12,50 +12,41 @@ namespace _4._1BaseConversion.Tests
         [TestMethod()]
         public void ConvertToBitTestfor156()
         { 
-
             byte[] firstArray = new byte[8];
             BaseConversion.ConvertToBit(156, ref firstArray);
             byte[] secondArray = { 1, 0, 0, 1, 1, 1, 0, 0 };
-
             CollectionAssert.AreEqual(firstArray, secondArray);
         }
         [TestMethod()]
         public void ConvertToBitTestfor70000()
         {
-
             byte[] firstArray = new byte[8];
             BaseConversion.ConvertToBit(70000, ref firstArray);
             byte[] secondArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0 };
-
             CollectionAssert.AreEqual(firstArray, secondArray);
         }
         [TestMethod()]
         public void TestBitwiseNOTfor300()
         {
-
             byte[] firstArray = new byte[8];
             BaseConversion.ConvertToBit(300, ref firstArray);
             byte[] notArray = new byte[16];
             BaseConversion.BitwiseNOT(firstArray, ref notArray);
             byte[] secondArray = { 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1 };
-
             CollectionAssert.AreEqual(notArray, secondArray);
         }
         [TestMethod()]
         public void TestBitwiseANDfor300and200()
         {
-
             byte[] firstArray, secondArray, resultArray;
             BuildArrays(300, 200, out firstArray, out secondArray, out resultArray);
             BaseConversion.BitwiseOPS(firstArray, secondArray, ref resultArray,'&');
             byte[] andArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 };
-
             CollectionAssert.AreEqual(resultArray, andArray);
         }
         [TestMethod()]
         public void TestBitwiseORfor300and200()
         {
-
             byte[] firstArray, secondArray, resultArray;
             BuildArrays(300,200,out firstArray,out secondArray, out resultArray);
             BaseConversion.BitwiseOPS(firstArray, secondArray, ref resultArray,'|');
@@ -71,7 +62,6 @@ namespace _4._1BaseConversion.Tests
             byte[] xorArray = { 0, 0, 0, 0, 1, 0, 0, 0 };
             CollectionAssert.AreEqual(resultArray, xorArray);
         }
-
         private static void BuildArrays(int firstNumber,int secondNumber, out byte[] firstArray,out byte[] secondArray,out byte[] resultArray)
         {
             firstArray = new byte[8];
@@ -89,7 +79,15 @@ namespace _4._1BaseConversion.Tests
             CollectionAssert.AreEqual(testArray, shiftedArray);
         }
         [TestMethod()]
-        public void TestLeftHandShift3()
+        public void TestRightHandShift2()
+        {
+            byte[] testArray = { 0, 1, 1, 0, 1, 1, 1, 0 };
+            BaseConversion.RightHandShift(ref testArray, 2);
+            byte[] shiftedArray = { 0, 0, 0, 1, 1, 0, 1, 1};
+            CollectionAssert.AreEqual(testArray, shiftedArray);
+        }
+        [TestMethod()]
+        public void TestLeftHandShift4()
         {
             byte[] testArray = {1, 1, 1, 1 };
             BaseConversion.LeftHandShift(ref testArray, 4);
@@ -142,11 +140,58 @@ namespace _4._1BaseConversion.Tests
         [TestMethod()]
         public void TestMultiplication256and1()
         {
-            byte[] Array, substractedArray, resultArray, differenceArray;
-            GenerateArrays(256, 1, 256, out minuedArray, out substractedArray, out resultArray);
-            differenceArray = new byte[8];
-            BaseConversion.Substraction(minuedArray, substractedArray, ref differenceArray);
-            CollectionAssert.AreEqual(resultArray, differenceArray);
+            byte[] multiplicated, multiplier, result, product;
+            GenerateArrays(256, 1, 256, out multiplicated, out multiplier, out result);
+            product = new byte[8];
+            BaseConversion.Multiply(multiplicated, multiplier, ref product);
+            CollectionAssert.AreEqual(result, product);
+        }
+
+        [TestMethod()]
+        public void TestMultiplication255and255()
+        {
+            byte[] multiplicated, multiplier, result, product;
+            GenerateArrays(255, 255, 65025, out multiplicated, out multiplier, out result);
+            product = new byte[8];
+            BaseConversion.Multiply(multiplicated, multiplier, ref product);
+            CollectionAssert.AreEqual(result, product);
+        }
+        [TestMethod()]
+        public void TestMultiplication0and255()
+        {
+            byte[] multiplicated, multiplier, result, product;
+            GenerateArrays(0, 255, 0, out multiplicated, out multiplier, out result);
+            product = new byte[8];
+            BaseConversion.Multiply(multiplicated, multiplier, ref product);
+            CollectionAssert.AreEqual(result, product);
+        }
+        [TestMethod()]
+        public void TestDivision256and2()
+        {
+            byte[] dividend, divisor, result, quotient;
+            GenerateArrays(256, 2, 128, out dividend, out divisor, out result);
+            quotient = new byte[8];
+            BaseConversion.Division(dividend, divisor, ref quotient);
+            CollectionAssert.AreEqual(result, quotient);
+        }
+        [TestMethod()]
+        public void TestDivision0and2()
+        {
+            byte[] dividend, divisor, result, quotient;
+            GenerateArrays(0, 2, 0, out dividend, out divisor, out result);
+            quotient = new byte[8];
+            BaseConversion.Division(dividend, divisor, ref quotient);
+            CollectionAssert.AreEqual(result, quotient);
+        }
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "DIVISION BY ZERO, Divisor should not be null !")]
+        public void TestDivisionByZero()
+        {
+            byte[] dividend, divisor, result, quotient;
+            GenerateArrays(22, 0, 0, out dividend, out divisor, out result);
+            quotient = new byte[8];
+            BaseConversion.Division(dividend, divisor, ref quotient);
+           
         }
         private static void GenerateArrays(int first, int second,int result, out byte[] firstArray, out byte[] secondArray, out byte[] resultArray)
         {
