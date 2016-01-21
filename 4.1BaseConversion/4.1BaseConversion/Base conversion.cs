@@ -23,16 +23,16 @@ namespace _4._1BaseConversion
         {
         }
 
-        public static void ConvertToBit(int number, ref byte[] converted)
+        public static void ConvertToBit(int number, ref byte[] converted,byte numeralSystem=2)
         {
             int i = 1;
 
-            while (number / 2 != 0 || number % 2 != 0)
+            while (number / numeralSystem != 0 || number % numeralSystem != 0)
             {
                 if (IsShortArray(converted, i)) converted = DoubleBitNumber(ref converted);
                 int index = GetCurrentIndex(converted, i);
-                converted[index] = (byte)(number%2) ;                
-                number = number / 2;
+                converted[index] = (byte)(number%numeralSystem) ;                
+                number = number / numeralSystem;
                 i++;
             }
         }
