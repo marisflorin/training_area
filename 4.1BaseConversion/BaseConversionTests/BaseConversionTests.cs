@@ -193,14 +193,14 @@ namespace _4._1BaseConversion.Tests
             BaseConversion.Division(dividend, divisor, ref quotient);
 
         }
-        private static void GenerateArrays(int first, int second, int result, out byte[] firstArray, out byte[] secondArray, out byte[] resultArray)
+        private static void GenerateArrays(int first, int second, int result, out byte[] firstArray, out byte[] secondArray, out byte[] resultArray,byte numeralSystem=2)
         {
             firstArray = new byte[8];
-            BaseConversion.ConvertToBit(first, ref firstArray);
+            BaseConversion.ConvertToBit(first, ref firstArray,numeralSystem);
             secondArray = new byte[8];
-            BaseConversion.ConvertToBit(second, ref secondArray);
+            BaseConversion.ConvertToBit(second, ref secondArray,numeralSystem);
             resultArray = new byte[8];
-            BaseConversion.ConvertToBit(result, ref resultArray);
+            BaseConversion.ConvertToBit(result, ref resultArray,numeralSystem);
 
         }
         [TestMethod()]
@@ -220,5 +220,42 @@ namespace _4._1BaseConversion.Tests
             BaseConversion.ConvertToBit(300, ref bigArray, 16);
             Assert.AreEqual(true, BaseConversion.LessThan(smallArray, bigArray));
         }
+        [TestMethod()]
+        public void TestAddition300and80000()
+        {
+            byte[] firstArray, secondArray, resultArray, additionArray;
+            GenerateArrays(300, 80000, 80300, out firstArray, out secondArray, out resultArray,12);
+            additionArray = new byte[8];
+            BaseConversion.Addition(firstArray, secondArray, ref additionArray,12);
+            CollectionAssert.AreEqual(resultArray, additionArray);
+        }
+        [TestMethod()]
+        public void Testsubstraction480and80base400()
+        {
+            byte[] minuedArray, substractedArray, resultArray, differenceArray;
+            GenerateArrays(480, 80, 400, out minuedArray, out substractedArray, out resultArray,16);
+            differenceArray = new byte[8];
+            BaseConversion.Substraction(minuedArray, substractedArray, ref differenceArray,16);
+            CollectionAssert.AreEqual(resultArray, differenceArray);
+        }
+        [TestMethod()]
+        public void TestMultiplication600and20base8()
+        {
+            byte[] multiplicated, multiplier, result, product;
+            GenerateArrays(600, 20, 12000, out multiplicated, out multiplier, out result,8);
+            product = new byte[8];
+            BaseConversion.Multiply(multiplicated, multiplier, ref product,8);
+            CollectionAssert.AreEqual(result, product);
+        }
+        [TestMethod()]
+        public void TestDivision1800000and2()
+        {
+            byte[] dividend, divisor, result, quotient;
+            GenerateArrays(1800000, 2, 900000, out dividend, out divisor, out result,8);
+            quotient = new byte[8];
+            BaseConversion.Division(dividend, divisor, ref quotient,8);
+            CollectionAssert.AreEqual(result, quotient);
+        }
+
     }
 }

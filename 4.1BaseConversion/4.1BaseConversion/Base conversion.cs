@@ -141,34 +141,31 @@ namespace _4._1BaseConversion
             return i > converted.Length;
         }
         public static bool LessThan(byte[] smallArray, byte[] bigArray)
-        {
-            bool isLessThan = false;
+        {            
             int length = GetBiggestLength(smallArray, bigArray);
             length--;
             for (int i = length; i >= 0; i--)
                 if (GetBitAtIndex(bigArray, (ushort)i) > GetBitAtIndex(smallArray, (ushort)i))
                 {
-                    isLessThan = true;
-                    break;
+                    return true;
                 }
-                else if (GetBitAtIndex(bigArray, (ushort)i) < GetBitAtIndex(smallArray, (ushort)i)) break;
-            return isLessThan;
-
+                else if (GetBitAtIndex(bigArray, (ushort)i) < GetBitAtIndex(smallArray, (ushort)i)) return false;
+            return false;
         }
-        public static void Addition(byte[] firstArray, byte[] secondArray,ref byte[] additionArray)
+        public static void Addition(byte[] firstArray, byte[] secondArray,ref byte[] additionArray,byte numeralSystem=2)
             {
             byte carrier=0;
             int length = GetBiggestLength(firstArray, secondArray);
             additionArray = new byte[length];
             for (ushort i=0;i< length;i++)
             {
-                if (Getquotient(firstArray, secondArray, carrier, i) > 0 && i == length - 1)
+                if (Getquotient(firstArray, secondArray, carrier, i,numeralSystem) > 0 && i == length - 1)
                 {
                     DoubleBitNumber(ref additionArray);
                     length = length * 2;
                 }
-                additionArray[length - i - 1] = GetRemainder(firstArray, secondArray, carrier, i);
-                carrier = Getquotient(firstArray, secondArray, carrier, i);
+                additionArray[length - i - 1] = GetRemainder(firstArray, secondArray, carrier, i,numeralSystem);
+                carrier = Getquotient(firstArray, secondArray, carrier, i,numeralSystem);
             }
            }
 
@@ -186,15 +183,15 @@ namespace _4._1BaseConversion
               }
             return false;         
             }
-        public static void Substraction(byte[] minuend, byte[] substracted, ref byte[] difference)
+        public static void Substraction(byte[] minuend, byte[] substracted, ref byte[] difference,byte numeralSystem=2)
         {
             difference = new byte[minuend.Length];
             int didBorrow = 0;
             for (ushort i = 0; i < minuend.Length; i++)
             {
-                int diff = 2 + GetBitAtIndex(minuend, i) - GetBitAtIndex(substracted, i) - didBorrow;
-                difference[minuend.Length - i - 1] = (byte)(diff % 2);
-                didBorrow = diff / 2 == 0 ? 1 : 0;
+                int diff = numeralSystem + GetBitAtIndex(minuend, i) - GetBitAtIndex(substracted, i) - didBorrow;
+                difference[minuend.Length - i - 1] = (byte)(diff % numeralSystem);
+                didBorrow = diff / numeralSystem == 0 ? 1 : 0;
 
             }
             difference = DownSize(difference);
@@ -211,7 +208,7 @@ namespace _4._1BaseConversion
             return difference;
         }
 
-        public static void Multiply(byte[] multiplicated, byte[] multiplier, ref byte[] product)
+        public static void Multiply(byte[] multiplicated, byte[] multiplier, ref byte[] product,byte numeralSystem=2)
             {
             byte[] step = { 0, 0, 0, 0, 0, 0, 0, 1 };
             byte[] zero = { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -219,11 +216,11 @@ namespace _4._1BaseConversion
             if (CompareOPS(multiplicated, zero, '=') || CompareOPS(multiplier, zero, '=')) product = zero;
             else while (CompareOPS(multiplier, step, '>')) 
              {           
-                    Addition(product, multiplicated, ref product);
-                    Substraction(multiplier,step,ref multiplier);            
+                    Addition(product, multiplicated, ref product,numeralSystem);
+                    Substraction(multiplier,step,ref multiplier,numeralSystem);            
              }
             }
-        public static void Division(byte[] dividend, byte[] divisor, ref byte[] quotient)
+        public static void Division(byte[] dividend, byte[] divisor, ref byte[] quotient,byte numeralSystem=2)
         {
             byte[] step = { 0, 0, 0, 0, 0, 0, 0, 1 };
             byte[] start = { 0, 0, 0, 0, 0, 0, 0, 1 };
@@ -235,17 +232,17 @@ namespace _4._1BaseConversion
             else               
             while (CompareOPS(dividend, divisor, '>'))
                 {           
-                    Substraction(dividend, divisor, ref dividend);
-                    Addition(quotient, step, ref quotient);
+                    Substraction(dividend, divisor, ref dividend,numeralSystem);
+                    Addition(quotient, step, ref quotient,numeralSystem);
                 }
         }
-        private static byte GetRemainder(byte[] firstArray, byte[] secondArray, byte carrier, ushort i)
+        private static byte GetRemainder(byte[] firstArray, byte[] secondArray, byte carrier, ushort i,byte numeralSystem)
         {
-            return (byte)((AddElements(firstArray, secondArray, i) + carrier) % 2);
+            return (byte)((AddElements(firstArray, secondArray, i) + carrier) % numeralSystem);
         }
-        private static byte Getquotient(byte[] firstArray, byte[] secondArray, byte carrier, ushort i)
+        private static byte Getquotient(byte[] firstArray, byte[] secondArray, byte carrier, ushort i,byte numeralSystem)
         {
-            return (byte)((AddElements(firstArray, secondArray, i) + carrier) / 2);
+            return (byte)((AddElements(firstArray, secondArray, i) + carrier) / numeralSystem);
         }
     }
 }
