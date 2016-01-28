@@ -26,14 +26,23 @@ namespace _5._1_Password_Generator
             int pos = 0;
             char r;
             password = "";
+            char[] passwordArray = new char[passLength];
             Random rnd = new Random();
-            for (byte i=0;i<passLength;i++)
+            for (byte i = 0; i < passLength; i++)
             {
                 pos = rnd.Next(0, 26);
-                r = (char)('a' + pos);
-                password += r;
-            }   
+                passwordArray[i] = (char)('a' + pos);
+            }
+            password = ConvertToString(passwordArray,password);
         }
 
+        private static string ConvertToString(char[] passwordArray,string password)
+        {
+            for (byte i = 0; i < passwordArray.Length; i++)
+            {
+                password += passwordArray[i];
+            }
+            return password;
+        }
     }
 }
