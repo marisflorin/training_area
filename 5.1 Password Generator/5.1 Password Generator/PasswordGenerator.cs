@@ -16,24 +16,61 @@ namespace _5._1_Password_Generator
     5.să nu includă caracterele similare: l, 1, L, o, 0, O
     6.să nu includă caractere abigue: {}[]()/\'"~,;.<>
     */
- public class PasswordGenerator
+    public struct Password
     {
-        static void Main(string[] args)
+        public int passwordLength;
+        public bool smallLetters;
+        public int numberOfCapitalLetters;
+        public int numberOfDigits;
+        public int numberOfSymbols;
+        public bool exculdeSimilarChar;
+        public bool excludeAmbiguousChar;
+    }
+        public class PasswordGenerator
+    {
+        static void Main(string[] args) { }
+
+        public static string PasswordBuilder(Password options)
         {
-        }
-        public static void PasswordBuilder(byte passLength, ref string password)
-        {
+        char[] smallLetters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+        char[] capitalLetters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+        char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        char[] symbols = {'!','"','#','$','%','&','\'','(',')','*','+','-','.','/',':',';', '<', '=', '>', '?', '@','[','\\' ,']' ,'^' ,'_' ,'`', '{', '|', '}', '~'};
+        char[] similars = { 'l', '1', 'L', 'o', '0', 'O' };
+        char[] ambiguous = { '{', '}', '[', ']', '(', ')', '/', '\\','\'', '"', '~', ',', ';', '.', '<', '>' };
             int pos = 0;
-            char r;
-            password = "";
-            char[] passwordArray = new char[passLength];
+            int k = 0;
+            string password = "";
+            char[] passwordArray = new char[options.passwordLength];
             Random rnd = new Random();
-            for (byte i = 0; i < passLength; i++)
+            for (int i = 0; i < options.numberOfCapitalLetters; i++)
+                AddChars(capitalLetters,ref passwordArray, rnd, i,k);
+            k += options.numberOfCapitalLetters ;
+            for (int i = 0; i < options.numberOfDigits; i++)
             {
-                pos = rnd.Next(0, 26);
-                passwordArray[i] = (char)('a' + pos);
+                pos = rnd.Next(0, digits.Length-1);
+                passwordArray[i+k] = digits[pos];
             }
-            password = ConvertToString(passwordArray,password);
+            k += options.numberOfDigits;
+            for (int i = 0; i < options.numberOfSymbols; i++)
+            {
+                pos = rnd.Next(0, symbols.Length-1);
+                passwordArray[i+k] = symbols[pos];
+            }
+            k += options.numberOfSymbols;
+            for (int i = 0; i < options.passwordLength-k; i++)
+                AddChars(smallLetters, ref passwordArray, rnd, i,k);
+            password = ConvertToString(passwordArray, password);
+            return password;
+        }
+
+        private static void AddChars(char[] charArray,ref char[] passwordArray, Random rnd, int i,int k)
+        {
+            int pos;
+            {
+                pos = rnd.Next(0, charArray.Length - 1);
+                passwordArray[i+k] = charArray[pos];
+            }
         }
 
         private static string ConvertToString(char[] passwordArray,string password)
