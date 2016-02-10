@@ -122,5 +122,22 @@ namespace _5._1_PasswordTests
             }
             Assert.AreEqual(symbolCount, options.numberOfSymbols);
         }
+        [TestMethod]
+        public void PrintPassword()
+        {
+            Password options = new Password
+            {
+                passwordLength = 14,
+                smallLetters = true,
+                numberOfCapitalLetters = 3,
+                numberOfDigits = 4,
+                numberOfSymbols = 3,
+                exculdeSimilarChar = false,
+                excludeAmbiguousChar = false
+            };
+            string password;
+            password = PasswordGenerator.PasswordBuilder(options);
+            Console.WriteLine(password);
+       }
     }
 }

@@ -60,7 +60,7 @@ namespace _5._1_Password_Generator
             k += options.numberOfSymbols;
             for (int i = 0; i < options.passwordLength-k; i++)
                 AddChars(smallLetters, ref passwordArray, rnd, i,k);
-            password = ConvertToString(passwordArray, password);
+            password = RandomizeToString(ref passwordArray, password,rnd);
             return password;
         }
 
@@ -73,11 +73,16 @@ namespace _5._1_Password_Generator
             }
         }
 
-        private static string ConvertToString(char[] passwordArray,string password)
+        private static string RandomizeToString(ref char[] passwordArray,string password,Random rnd)
         {
-            for (byte i = 0; i < passwordArray.Length; i++)
+            int pos;
+            while (passwordArray.Length > 0)
             {
-                password += passwordArray[i];
+                pos = rnd.Next(0, passwordArray.Length - 1);
+                password += passwordArray[pos];
+                for (int i = pos; i < passwordArray.Length - 1; i++)
+                    passwordArray[i] = passwordArray[i + 1];
+                Array.Resize(ref passwordArray, passwordArray.Length - 1);
             }
             return password;
         }
