@@ -32,13 +32,28 @@ namespace _5._1_Password_Generator
 
         public static string PasswordBuilder(Password options)
         {
+            
         char[] smallLetters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
         char[] capitalLetters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
         char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         char[] symbols = {'!','"','#','$','%','&','\'','(',')','*','+','-','.','/',':',';', '<', '=', '>', '?', '@','[','\\' ,']' ,'^' ,'_' ,'`', '{', '|', '}', '~'};
         char[] similars = { 'l', '1', 'L', 'o', '0', 'O' };
         char[] ambiguous = { '{', '}', '[', ']', '(', ')', '/', '\\','\'', '"', '~', ',', ';', '.', '<', '>' };
-            int pos = 0;
+            if (options.exculdeSimilarChar)
+            {
+                DeleteExceptions(similars,ref smallLetters);
+                DeleteExceptions(similars,ref capitalLetters);
+                DeleteExceptions(similars,ref digits);
+                DeleteExceptions(similars,ref symbols);
+            }
+            if (options.excludeAmbiguousChar)
+            {
+                DeleteExceptions(ambiguous, ref symbols);
+                DeleteExceptions(ambiguous, ref smallLetters);
+                DeleteExceptions(ambiguous, ref capitalLetters);
+                DeleteExceptions(ambiguous, ref digits);
+                DeleteExceptions(ambiguous, ref symbols);
+            }
             int k = 0;
             string password = "";
             char[] passwordArray = new char[options.passwordLength];
@@ -47,23 +62,27 @@ namespace _5._1_Password_Generator
                 AddChars(capitalLetters,ref passwordArray, rnd, i,k);
             k += options.numberOfCapitalLetters ;
             for (int i = 0; i < options.numberOfDigits; i++)
-            {
-                pos = rnd.Next(0, digits.Length-1);
-                passwordArray[i+k] = digits[pos];
-            }
+                AddChars(digits, ref passwordArray, rnd, i, k);
             k += options.numberOfDigits;
             for (int i = 0; i < options.numberOfSymbols; i++)
-            {
-                pos = rnd.Next(0, symbols.Length-1);
-                passwordArray[i+k] = symbols[pos];
-            }
+                AddChars(symbols, ref passwordArray, rnd, i, k);
             k += options.numberOfSymbols;
             for (int i = 0; i < options.passwordLength-k; i++)
                 AddChars(smallLetters, ref passwordArray, rnd, i,k);
             password = RandomizeToString(ref passwordArray, password,rnd);
             return password;
         }
-
+        private static void DeleteExceptions(char[] exceptionsArray,ref char[] arrayToCheck)
+        {
+            for (int i = 0; i < arrayToCheck.Length; i++)
+                for (int j = 0; j < exceptionsArray.Length; j++)
+                    if (arrayToCheck[i] == exceptionsArray[j])
+                    {
+                        ShiftOneToLeft(ref arrayToCheck, i);
+                        if (i == arrayToCheck.Length) i--;                    
+                        j = 0;
+                    }
+        }
         private static void AddChars(char[] charArray,ref char[] passwordArray, Random rnd, int i,int k)
         {
             int pos;
@@ -80,11 +99,16 @@ namespace _5._1_Password_Generator
             {
                 pos = rnd.Next(0, passwordArray.Length - 1);
                 password += passwordArray[pos];
-                for (int i = pos; i < passwordArray.Length - 1; i++)
-                    passwordArray[i] = passwordArray[i + 1];
-                Array.Resize(ref passwordArray, passwordArray.Length - 1);
+                ShiftOneToLeft(ref passwordArray, pos);
             }
             return password;
+        }
+
+        private static void ShiftOneToLeft(ref char[] passwordArray, int pos)
+        {
+            for (int i = pos; i < passwordArray.Length - 1; i++)
+                passwordArray[i] = passwordArray[i + 1];
+            Array.Resize(ref passwordArray, passwordArray.Length - 1);
         }
     }
 }

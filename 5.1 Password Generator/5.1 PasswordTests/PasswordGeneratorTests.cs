@@ -10,7 +10,9 @@ namespace _5._1_PasswordTests
         string smallLetters = "abcdefghijklmnopqrstuvwxyz";
         string capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string digits = "0123456789";
-        string symbols= "!\"#$%&'()*+-./:;<=>?@[\\]^_`{|}~";                                      
+        string symbols= "!\"#$%&'()*+-./:;<=>?@[\\]^_`{|}~";
+        string similars = "l1Lo0O";
+        string ambiguous = "{}[]()/\'\"~,;.<>";                                 
         [TestMethod]
         public void PasswordLength()
         {
@@ -131,7 +133,7 @@ namespace _5._1_PasswordTests
                 smallLetters = true,
                 numberOfCapitalLetters = 3,
                 numberOfDigits = 4,
-                numberOfSymbols = 3,
+                numberOfSymbols = 7,
                 exculdeSimilarChar = false,
                 excludeAmbiguousChar = false
             };
@@ -139,5 +141,61 @@ namespace _5._1_PasswordTests
             password = PasswordGenerator.PasswordBuilder(options);
             Console.WriteLine(password);
        }
+        [TestMethod]
+        public void CheckForSimilar()
+        {
+            Password options = new Password
+            {
+                passwordLength = 1000,
+                smallLetters = true,
+                numberOfCapitalLetters = 300,
+                numberOfDigits = 400,
+                numberOfSymbols = 100,
+                exculdeSimilarChar = true,
+                excludeAmbiguousChar = false
+            };
+            string password;           
+            password = PasswordGenerator.PasswordBuilder(options);
+            bool noSimilars = true;
+            for (int i = 0; i < options.passwordLength; i++)
+            {
+                for (int j = 0; j < similars.Length; j++)
+                    if (password[i] == similars[j])
+                    {
+                        noSimilars = false;
+                        break;
+                    }
+                if (!noSimilars) break; 
+            }
+            Assert.AreEqual(noSimilars, options.exculdeSimilarChar);            
+        }
+        [TestMethod]
+        public void CheckForAmbiguous()
+        {
+            Password options = new Password
+            {
+                passwordLength = 1000,
+                smallLetters = true,
+                numberOfCapitalLetters = 300,
+                numberOfDigits = 400,
+                numberOfSymbols = 100,
+                exculdeSimilarChar = false,
+                excludeAmbiguousChar = true
+            };
+            string password;
+            password = PasswordGenerator.PasswordBuilder(options);
+            bool noAmbiguous = true;
+            for (int i = 0; i < options.passwordLength; i++)
+            {
+                for (int j = 0; j < ambiguous.Length; j++)
+                    if (password[i] == ambiguous[j])
+                    {
+                        noAmbiguous = false;
+                        break;
+                    }
+                if (!noAmbiguous) break;
+            }
+            Assert.AreEqual(noAmbiguous, options.excludeAmbiguousChar);
+        }
     }
 }
