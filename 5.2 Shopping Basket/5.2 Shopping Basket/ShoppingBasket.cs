@@ -30,9 +30,19 @@ Ai un coș plin de produse. Dacă cunoști prețul fiecărui produs în parte:
             int totalPrice = 0;
             for (int i = 0; i < shoppingBasket.Length; i++)
                 totalPrice += shoppingBasket[i].price;
-            return totalPrice;
-                
-                
+            return totalPrice;                            
+        }
+        public static int CheapestIndex(Item[] shoppingBasket)
+        {
+            int cheapestIndex = 0;
+            int lowestPrice = shoppingBasket[0].price;
+            for (int i = 0; i < shoppingBasket.Length; i++)
+                if (lowestPrice > shoppingBasket[i].price)
+                {
+                    cheapestIndex = i;
+                    lowestPrice = shoppingBasket[i].price;
+                };
+            return cheapestIndex ;
         }
     }
 }
