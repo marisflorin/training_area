@@ -44,5 +44,29 @@ Ai un coș plin de produse. Dacă cunoști prețul fiecărui produs în parte:
                 };
             return cheapestIndex ;
         }
+        public static void EliminateMostExpensive(ref Item[] shoppingBasket)
+        {
+            int index= MostExpensiveIndex(shoppingBasket);
+            ShiftToLeft(ref shoppingBasket, index);
+        }
+        public static int MostExpensiveIndex(Item[] shoppingBasket)
+        {
+            int expensiveIndex = 0;
+            int HighestPrice = shoppingBasket[0].price;
+            for (int i = 0; i < shoppingBasket.Length; i++)
+                if (HighestPrice < shoppingBasket[i].price)
+                {
+                    expensiveIndex = i;
+                    HighestPrice = shoppingBasket[i].price;
+                };
+            return expensiveIndex;
+        }
+        public static void ShiftToLeft(ref Item[] itemArray, int startingPosition)
+        {
+            for (int i = startingPosition; i < itemArray.Length - 1; i++)
+                itemArray[i] = itemArray[i + 1];
+            Array.Resize(ref itemArray, itemArray.Length - 1);
+        }
+
     }
 }
