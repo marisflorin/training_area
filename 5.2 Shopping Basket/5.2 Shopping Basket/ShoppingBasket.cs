@@ -49,6 +49,19 @@ Ai un coș plin de produse. Dacă cunoști prețul fiecărui produs în parte:
             int index= MostExpensiveIndex(shoppingBasket);
             ShiftToLeft(ref shoppingBasket, index);
         }
+        public static void AddNewItem(Item newItem,ref Item[] shoppingBasket)
+        {
+            int length = shoppingBasket.Length + 1;
+            Array.Resize(ref shoppingBasket, length);
+            shoppingBasket[length-1] = newItem;
+
+        }
+        public static decimal GetMedianPrice(Item[] shoppingBasket)
+        {
+            decimal medianPrice = 0;
+            medianPrice = TotalPrice(shoppingBasket) / shoppingBasket.Length;
+            return medianPrice;
+        }
         public static int MostExpensiveIndex(Item[] shoppingBasket)
         {
             int expensiveIndex = 0;
