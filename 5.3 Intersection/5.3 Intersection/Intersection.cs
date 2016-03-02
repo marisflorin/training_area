@@ -46,11 +46,28 @@ public struct Result
         static void Main(string[] args)
         {
         }
-        /*public static Result CheckIntersection(Directions[] list, Point startingPoint)
+        public static Result CheckIntersection(Directions[] list, Point startingPoint)
         {
-          
-
-        }*/
+            Result intersectionPoint= new Result();
+            Point[] routeCoordinates=new Point[1];
+            GenerateCoordinates(ref routeCoordinates, list, startingPoint);
+            intersectionPoint.isIntersection = false;
+            for (int i=0; i<routeCoordinates.Length-1; i++)
+            {
+                for(int j=i+1;j<routeCoordinates.Length;j++)
+                {
+                    if (routeCoordinates[i].x==routeCoordinates[j].x && routeCoordinates[i].y == routeCoordinates[j].y)
+                    {
+                        intersectionPoint.isIntersection = true;
+                        intersectionPoint.firstIntersection.x = routeCoordinates[i].x;
+                        intersectionPoint.firstIntersection.y = routeCoordinates[i].y;
+                        break;
+                    }
+                    if (intersectionPoint.isIntersection) break;
+                }
+            }
+            return intersectionPoint;
+        }
         public static void GenerateCoordinates(ref Point[] routeCoordinates, Directions[] route,Point startingPoint  )
         {
             routeCoordinates = new Point[route.Length+1];
