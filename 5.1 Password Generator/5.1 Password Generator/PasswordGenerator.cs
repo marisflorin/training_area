@@ -49,24 +49,31 @@ namespace _5._1_Password_Generator
             string exceptions = "";
             if (options.exculdeSimilarChar) exceptions += "l1Lo0O";
             if (options.excludeAmbiguousChar) exceptions += "{}[]()/\'\"~,;.<>";
-
-            int numberOfSmallLetters = options.passwordLength - options.numberOfCapitalLetters -
+            int numberOfSmallLetters=0;
+            if (options.smallLetters)
+              numberOfSmallLetters = options.passwordLength - options.numberOfCapitalLetters -
                 options.numberOfDigits - options.numberOfSymbols;
 
+            if (numberOfSmallLetters < 0) throw new ArgumentException("Password length is too small");
+            if (!IsCorrectPasswordLength(options, numberOfSmallLetters)) throw new ArgumentException("Password length is not correct"); ;
             Random rnd = new Random();
 
-            password += GetString(capitalLetters, options.numberOfCapitalLetters, rnd,exceptions) +
-                        GetString(digits, options.numberOfDigits, rnd,exceptions)+GetString(smallLetterss,numberOfSmallLetters,rnd,exceptions);
+            password += GetString(capitalLetters, options.numberOfCapitalLetters, rnd, exceptions) +
+                        GetString(digits, options.numberOfDigits, rnd, exceptions) + GetString(smallLetterss, numberOfSmallLetters, rnd, exceptions);
 
             exceptions += GenerateString(smallLetterss) + GenerateString(capitalLetters) + GenerateString(digits);
-                        password += GetString(totalChars, options.numberOfSymbols, rnd, exceptions);
-            
+            password += GetString(totalChars, options.numberOfSymbols, rnd, exceptions);
+
             password = RandomizeString(password, rnd);
 
             return password;
         }
-    
-      
+
+        private static bool IsCorrectPasswordLength(Password options, int numberOfSmallLetters)
+        {
+            return options.passwordLength - numberOfSmallLetters - options.numberOfCapitalLetters - options.numberOfDigits - options.numberOfSymbols == 0;
+        }
+
         private static string GetString(Interval acceptedInterval, int numberOfChars, Random rnd, string exceptions)
         {
             int k = 0;

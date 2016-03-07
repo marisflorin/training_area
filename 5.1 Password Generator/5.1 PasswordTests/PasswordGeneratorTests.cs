@@ -153,5 +153,39 @@ namespace _5._1_PasswordTests
             bool noAmbiguous = PasswordGenerator.CheckNotExistence(password, ambiguous);
             Assert.AreEqual(noAmbiguous, options.excludeAmbiguousChar);
         }
+            [TestMethod]
+            [ExpectedException(typeof(ArgumentException), "Password length is too small")]
+        public void TooManyCharsTest()
+        {
+            Password options = new Password
+            {
+                passwordLength = 10,
+                smallLetters = true,
+                numberOfCapitalLetters = 5,
+                numberOfDigits = 5,
+                numberOfSymbols = 5,
+                exculdeSimilarChar = false,
+                excludeAmbiguousChar = true
+            };
+            string password;
+            password = PasswordGenerator.PasswordBuilder(options);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Password length is not correct")]
+        public void IncorrectPasswordLengthTest()
+        {
+            Password options = new Password
+            {
+                passwordLength = 10,
+                smallLetters = false,
+                numberOfCapitalLetters = 2,
+                numberOfDigits = 2,
+                numberOfSymbols = 2,
+                exculdeSimilarChar = false,
+                excludeAmbiguousChar = true
+            };
+            string password;
+            password = PasswordGenerator.PasswordBuilder(options);
+        }
     }
 }
