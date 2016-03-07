@@ -10,7 +10,7 @@ namespace _5._1_PasswordTests
         string smallLetters = "abcdefghijklmnopqrstuvwxyz";
         string capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string digits = "0123456789";
-        string symbols= "!\"#$%&'()*+-./:;<=>?@[\\]^_`{|}~";
+        string symbols= "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
         string similars = "l1Lo0O";
         string ambiguous = "{}[]()/\'\"~,;.<>";                                 
         [TestMethod]
@@ -43,16 +43,7 @@ namespace _5._1_PasswordTests
                 excludeAmbiguousChar = false
             };
             string password = PasswordGenerator.PasswordBuilder(options);         
-            bool onlySmallLetters=false;
-            for (int i = 0; i < password.Length; i++)
-            {
-                onlySmallLetters = false;
-                for (int j = 0; j < smallLetters.Length; j++)
-                {
-                    if (password[i] == smallLetters[j]) onlySmallLetters = true;
-                }
-                if (onlySmallLetters == false) break;
-            }
+            bool onlySmallLetters=PasswordGenerator.CheckOnlySmallLetters(password, smallLetters);
             Assert.AreEqual(true, onlySmallLetters);
         }
         [TestMethod]
@@ -70,12 +61,7 @@ namespace _5._1_PasswordTests
             };
             string password;
             password = PasswordGenerator.PasswordBuilder(options);
-            int largeLetterCount = 0;
-            for (int i = 0; i < options.passwordLength; i++)
-            {
-              for (int j = 0; j < capitalLetters.Length; j++)
-                 if (password[i] == capitalLetters[j]) largeLetterCount++;              
-            }
+            int largeLetterCount = PasswordGenerator.Counter(password,capitalLetters);            
             Assert.AreEqual(largeLetterCount,options.numberOfCapitalLetters);
         }
         [TestMethod]
@@ -93,36 +79,26 @@ namespace _5._1_PasswordTests
             };
             string password;
             password = PasswordGenerator.PasswordBuilder(options);
-            int digitCount = 0;
-            for (int i = 0; i < options.passwordLength; i++)
-            {
-                for (int j = 0; j < digits.Length; j++)
-                    if (password[i] == digits[j]) digitCount++;
-            }
+            int digitCount = PasswordGenerator.Counter(password, digits);
             Assert.AreEqual(digitCount, options.numberOfDigits);
         }
         [TestMethod]
-        public void TestTwoSymbolsDigits()
+        public void TestTwoHundredSymbols()
         {
             Password options = new Password
             {
-                passwordLength = 8,
+                passwordLength = 230,
                 smallLetters = true,
                 numberOfCapitalLetters = 2,
-                numberOfDigits = 1,
-                numberOfSymbols = 2,
+                numberOfDigits = 2,
+                numberOfSymbols = 200,
                 exculdeSimilarChar = false,
                 excludeAmbiguousChar = false
             };
             string password;
             password = PasswordGenerator.PasswordBuilder(options);
-            int symbolCount = 0;
-            for (int i = 0; i < options.passwordLength; i++)
-            {
-                for (int j = 0; j < symbols.Length; j++)
-                    if (password[i] == symbols[j]) symbolCount++;
-            }
-            Assert.AreEqual(symbolCount, options.numberOfSymbols);
+            int symbolCount = PasswordGenerator.Counter(password, symbols);
+            Assert.AreEqual(options.numberOfSymbols, symbolCount);
         }
         [TestMethod]
         public void PrintPassword()
@@ -133,7 +109,7 @@ namespace _5._1_PasswordTests
                 smallLetters = true,
                 numberOfCapitalLetters = 3,
                 numberOfDigits = 4,
-                numberOfSymbols = 7,
+                numberOfSymbols = 2,
                 exculdeSimilarChar = false,
                 excludeAmbiguousChar = false
             };
@@ -156,17 +132,7 @@ namespace _5._1_PasswordTests
             };
             string password;           
             password = PasswordGenerator.PasswordBuilder(options);
-            bool noSimilars = true;
-            for (int i = 0; i < options.passwordLength; i++)
-            {
-                for (int j = 0; j < similars.Length; j++)
-                    if (password[i] == similars[j])
-                    {
-                        noSimilars = false;
-                        break;
-                    }
-                if (!noSimilars) break; 
-            }
+            bool noSimilars = PasswordGenerator.CheckNotExistence(password, similars);            
             Assert.AreEqual(noSimilars, options.exculdeSimilarChar);            
         }
         [TestMethod]
@@ -184,17 +150,7 @@ namespace _5._1_PasswordTests
             };
             string password;
             password = PasswordGenerator.PasswordBuilder(options);
-            bool noAmbiguous = true;
-            for (int i = 0; i < options.passwordLength; i++)
-            {
-                for (int j = 0; j < ambiguous.Length; j++)
-                    if (password[i] == ambiguous[j])
-                    {
-                        noAmbiguous = false;
-                        break;
-                    }
-                if (!noAmbiguous) break;
-            }
+            bool noAmbiguous = PasswordGenerator.CheckNotExistence(password, ambiguous);
             Assert.AreEqual(noAmbiguous, options.excludeAmbiguousChar);
         }
     }
