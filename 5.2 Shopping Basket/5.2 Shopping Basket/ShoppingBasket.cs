@@ -80,6 +80,16 @@ Ai un coș plin de produse. Dacă cunoști prețul fiecărui produs în parte:
                 itemArray[i] = itemArray[i + 1];
             Array.Resize(ref itemArray, itemArray.Length - 1);
         }
-
+        public static bool CheckExistance(Item[] shoppingBasket, string searched)
+        {
+            bool existing = false;
+            for (int i = 0; i < shoppingBasket.Length; i++)
+                if (shoppingBasket[i].name == searched)
+                {
+                    existing = true;
+                    break;
+                }
+            return existing;
+        }
     }
 }

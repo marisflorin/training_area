@@ -44,13 +44,8 @@ namespace _5._2_ShoppingBasketTests
                                                  new Item() { name ="Cheese", price=10}
                                                };
             ShoppingBasket.EliminateMostExpensive(ref shoppingBasket);
-            bool eliminated = true;
-            for (int i = 0; i < shoppingBasket.Length; i++)
-                if (shoppingBasket[i].name == "Ham")
-                {
-                    eliminated = false;
-                    break;
-                }           
+
+            bool eliminated = !ShoppingBasket.CheckExistance(shoppingBasket, "Ham");
             Assert.AreEqual(true, eliminated);
 
         }
