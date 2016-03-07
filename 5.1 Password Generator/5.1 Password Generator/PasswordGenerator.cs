@@ -45,49 +45,23 @@ namespace _5._1_Password_Generator
             Interval smallLetterss = new Interval(97, 122);
             Interval capitalLetters = new Interval(65, 90);
             Interval digits = new Interval(48, 57);
-            /*
-            char[] smallLetters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-            char[] capitalLetters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-            char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-            char[] symbols = {'!','"','#','$','%','&','\'','(',')','*','+','-','.','/',':',';', '<', '=', '>', '?', '@','[','\\' ,']' ,'^' ,'_' ,'`', '{', '|', '}', '~'};
-            char[] similars = { 'l', '1', 'L', 'o', '0', 'O' };
-            char[] ambiguous = { '{', '}', '[', ']', '(', ')', '/', '\\','\'', '"', '~', ',', ';', '.', '<', '>' };
-
-                    if (options.exculdeSimilarChar)
-                {
-                    DeleteExceptions(similars,ref smallLetters);
-                    DeleteExceptions(similars,ref capitalLetters);
-                    DeleteExceptions(similars,ref digits);
-                    DeleteExceptions(similars,ref symbols);
-                }
-
-                if (options.excludeAmbiguousChar)
-                {
-                    DeleteExceptions(ambiguous, ref symbols);
-                    DeleteExceptions(ambiguous, ref smallLetters);
-                    DeleteExceptions(ambiguous, ref capitalLetters);
-                    DeleteExceptions(ambiguous, ref digits);
-                    DeleteExceptions(ambiguous, ref symbols);
-                }
-                */
-
-            //int k = 0;
             string password = "";
             string exceptions = "";
-            string symbols = "";
             if (options.exculdeSimilarChar) exceptions += "l1Lo0O";
             if (options.excludeAmbiguousChar) exceptions += "{}[]()/\'\"~,;.<>";
+
             int numberOfSmallLetters = options.passwordLength - options.numberOfCapitalLetters -
                 options.numberOfDigits - options.numberOfSymbols;
 
             Random rnd = new Random();
-            password += GetString(capitalLetters, options.numberOfCapitalLetters, rnd,exceptions) +
-                GetString(digits, options.numberOfDigits, rnd,exceptions)+GetString(smallLetterss,numberOfSmallLetters,rnd,exceptions);
-            symbols = GenerateString(totalChars);
-            exceptions += GenerateString(smallLetterss) + GenerateString(capitalLetters) + GenerateString(digits);
-            password += GetString(totalChars, options.numberOfSymbols, rnd, exceptions);
 
-            // password = RandomizeToString(ref passwordArray, password, rnd);
+            password += GetString(capitalLetters, options.numberOfCapitalLetters, rnd,exceptions) +
+                        GetString(digits, options.numberOfDigits, rnd,exceptions)+GetString(smallLetterss,numberOfSmallLetters,rnd,exceptions);
+
+            exceptions += GenerateString(smallLetterss) + GenerateString(capitalLetters) + GenerateString(digits);
+                        password += GetString(totalChars, options.numberOfSymbols, rnd, exceptions);
+            
+            password = RandomizeString(password, rnd);
 
             return password;
         }
@@ -127,9 +101,11 @@ namespace _5._1_Password_Generator
         }
 
 
-        private static string RandomizeToString(ref char[] passwordArray,string password,Random rnd)
+        private static string RandomizeString(string password,Random rnd)
         {
             int pos;
+            char[] passwordArray=password.ToCharArray();
+            password = "";
             while (passwordArray.Length > 0)
             {
                 pos = rnd.Next(0, passwordArray.Length - 1);
