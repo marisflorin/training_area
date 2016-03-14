@@ -18,9 +18,8 @@ namespace Fibonacci
   
         public static int CalculateFibonacci(int x)
         {
-
-            if (x < 4)
-                return 1;
+            if (x == 1) return 0;
+            if (x < 4) return 1;
             return CalculateFibonacci(x - 1) + CalculateFibonacci(x - 2);
         }
         
