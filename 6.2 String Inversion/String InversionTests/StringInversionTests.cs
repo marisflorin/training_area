@@ -15,6 +15,16 @@ namespace _6._2_String_Inversion.Tests
         {
             Assert.AreEqual("esuom",StringInversion.Invert("mouse"));
         }
+        [TestMethod()]
+        public void TwoLetterTest()
+        {
+            Assert.AreEqual("es", StringInversion.Invert("se"));
+        }
+        [TestMethod()]
+        public void ThreeWordTest()
+        {
+            Assert.AreEqual("This is Swiched", StringInversion.Invert("dehciwS si sihT"));
+        }
     }
 }
 
