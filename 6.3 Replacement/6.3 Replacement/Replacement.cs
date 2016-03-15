@@ -15,7 +15,8 @@ namespace _6._3_Replacement
         }
         public static string Replace(string initial, string replacement, int index)
         {
-            if (initial.Length == index) return initial.Remove(initial.Length - 1) + replacement;
+            if (index < 1 || index > initial.Length) return initial;
+            if (initial.Length== index) return initial.Remove(initial.Length - 1)+replacement;
             return Replace(initial.Remove(initial.Length - 1), replacement, index) 
                 + initial[initial.Length - 1];
 
