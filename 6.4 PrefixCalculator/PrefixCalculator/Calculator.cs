@@ -29,8 +29,12 @@ namespace PrefixCalculator
                     return Convert.ToDouble(input[index]) + Convert.ToDouble(input[index + 1]);
                 case "-":
                     return Convert.ToDouble(input[index]) - Convert.ToDouble(input[index + 1]);
-                default :
-                    break;
+                case "*":
+                    return Convert.ToDouble(input[index]) * Convert.ToDouble(input[index + 1]);
+                case "/":
+                    return Convert.ToDouble(input[index]) / Convert.ToDouble(input[index + 1]);
+
+
             }
             return 0;
         }

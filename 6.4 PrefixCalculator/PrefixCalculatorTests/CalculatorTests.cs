@@ -26,10 +26,16 @@ Exemple pentru format prefixată:
             Assert.AreEqual(7,Calculator.PrefixCalculator(input));
         }
         [TestMethod()]
-        public void TestMultipleOperation()
+        public void TestSubstraction()
         {
             string[] input = { "+","-","+", "3", "4","6","1" };
             Assert.AreEqual(2, Calculator.PrefixCalculator(input));
+        }
+        [TestMethod()]
+        public void TestMultipleOperation()
+        {
+            string[] input = { "+", "/", "*","+","56", "45", "46", "3", "-", "1", "0.25" };
+            Assert.AreEqual(1549.4166, Calculator.PrefixCalculator(input));
         }
     }
 }
