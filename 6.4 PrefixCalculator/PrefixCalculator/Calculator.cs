@@ -13,13 +13,28 @@ namespace PrefixCalculator
         }
         public static double PrefixCalculator(string[] input, int index = 0)
         {
-            if (input.Length == 1) return Convert.ToInt32(input[0]);
+            if (input.Length == 1) return Convert.ToDouble(input[0]);
             if (input[index] == "+" || input[index] == "-") return PrefixCalculator(input, ++index);
-            double result = Convert.ToInt32(input[index]) + Convert.ToInt32(input[index + 1]);
+            double result = GetResult(input, index);
             input[index + 1] = Convert.ToString(result);
-            ShiftToFeft(ref input, index - 1);    
-            return PrefixCalculator(input,0) ;
+            ShiftToFeft(ref input, index - 1);
+            return PrefixCalculator(input, 0);
         }
+
+        private static double GetResult(string[] input, int index)
+        {
+            switch  (input[index-1])
+                {
+                case "+" :
+                    return Convert.ToDouble(input[index]) + Convert.ToDouble(input[index + 1]);
+                case "-":
+                    return Convert.ToDouble(input[index]) - Convert.ToDouble(input[index + 1]);
+                default :
+                    break;
+            }
+            return 0;
+        }
+
         public static void ShiftToFeft(ref string[] array,int index,int positions=2)
         {
             for (int i=index; i<array.Length-positions; i++)

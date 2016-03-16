@@ -25,5 +25,11 @@ Exemple pentru format prefixată:
             string[] input = { "+", "3", "4" };
             Assert.AreEqual(7,Calculator.PrefixCalculator(input));
         }
+        [TestMethod()]
+        public void TestMultipleOperation()
+        {
+            string[] input = { "+","-","+", "3", "4","6","1" };
+            Assert.AreEqual(2, Calculator.PrefixCalculator(input));
+        }
     }
 }
