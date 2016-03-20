@@ -11,28 +11,28 @@ namespace PrefixCalculator
         static void Main(string[] args)
         {
         }
-        public static double PrefixCalculator(string[] input, int index = 0)
+        public static double PrefixCalculator(string[] input, int index=0)
         {
             if (input.Length == 1) return Convert.ToDouble(input[0]);
-            if (input[index] == "+" || input[index] == "-") return PrefixCalculator(input, ++index);
+            if (!(input[index] == "+" || input[index] == "-" || input[index] == "*" || input[index] == "/")) return PrefixCalculator(input, --index);
             double result = GetResult(input, index);
-            input[index + 1] = Convert.ToString(result);
-            ShiftToFeft(ref input, index - 1);
-            return PrefixCalculator(input, 0);
+            input[index] = Convert.ToString(result);
+            ShiftToFeft(ref input, index + 1);
+            return PrefixCalculator(input, input.Length-1);
         }
 
         private static double GetResult(string[] input, int index)
         {
-            switch  (input[index-1])
+            switch  (input[index])
                 {
                 case "+" :
-                    return Convert.ToDouble(input[index]) + Convert.ToDouble(input[index + 1]);
+                    return Convert.ToDouble(input[index+1]) + Convert.ToDouble(input[index + 2]);
                 case "-":
-                    return Convert.ToDouble(input[index]) - Convert.ToDouble(input[index + 1]);
+                    return Convert.ToDouble(input[index+1]) - Convert.ToDouble(input[index + 2]);
                 case "*":
-                    return Convert.ToDouble(input[index]) * Convert.ToDouble(input[index + 1]);
+                    return Convert.ToDouble(input[index+1]) * Convert.ToDouble(input[index + 2]);
                 case "/":
-                    return Convert.ToDouble(input[index]) / Convert.ToDouble(input[index + 1]);
+                    return Convert.ToDouble(input[index+1]) / Convert.ToDouble(input[index + 2]);
 
 
             }

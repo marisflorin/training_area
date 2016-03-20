@@ -23,19 +23,20 @@ Exemple pentru format prefixată:
         public void PrefixCalculatorTest()
         {
             string[] input = { "+", "3", "4" };
-            Assert.AreEqual(7,Calculator.PrefixCalculator(input));
+            Assert.AreEqual(7, Calculator.PrefixCalculator(input, input.Length - 1));
         }
         [TestMethod()]
         public void TestSubstraction()
         {
-            string[] input = { "+","-","+", "3", "4","6","1" };
-            Assert.AreEqual(2, Calculator.PrefixCalculator(input));
+            string[] input = { "+", "-", "+", "3", "4", "6", "1" };
+            Assert.AreEqual(2, Calculator.PrefixCalculator(input, input.Length - 1));
         }
         [TestMethod()]
         public void TestMultipleOperation()
         {
-            string[] input = { "+", "/", "*","+","56", "45", "46", "3", "-", "1", "0.25" };
-            Assert.AreEqual(1549.4166, Calculator.PrefixCalculator(input));
+            string[] input = { "+", "/", "*", "+", "56", "45", "46", "3", "-", "1", "0.25" };
+            double result = Calculator.PrefixCalculator(input, input.Length - 1);
+            Assert.AreEqual(1549.41667, Math.Round(result, 5));
         }
     }
 }
