@@ -22,24 +22,42 @@ Exemple pentru format prefixată:
         [TestMethod()]
         public void PrefixCalculatorTest()
         {
-            string[] input = { "+", "3", "4" };
-            int start=0;
-            Assert.AreEqual(7, Calculator.Result(input,ref start));
+            string input ="+ 3 4";
+            Assert.AreEqual(7, Calculator.PrefixCalculator(input));
         }
         [TestMethod()]
         public void TestSubstraction()
         {
-            string[] input = { "+", "-", "3", "4", "6" };
-            int start = 0;
-            Assert.AreEqual(5, Calculator.Result(input,ref start));
+            string input = "+ - 3 4 6";
+            Assert.AreEqual(5, Calculator.PrefixCalculator(input));
         }
         [TestMethod()]
-        public void TestMultipleOperation()
+        public void TestMultipleOperation1()
         {
-            string[] input = { "+", "/", "*", "+", "56", "45", "46", "3", "-", "1", "0.25" };
-            int start = 0;
-            double result = Calculator.Result(input,ref start);
+            string input = "+ / * + 56 45 46 3 - 1 0.25";
+            double result = Calculator.PrefixCalculator(input);
             Assert.AreEqual(1549.41667, Math.Round(result, 5));
+        }
+        [TestMethod()]
+        public void TestMultipleOperation2()
+        {
+            string input = "* + 3 3 + 2 2";
+            double result = Calculator.PrefixCalculator(input);
+            Assert.AreEqual(24, Math.Round(result, 5));
+        }
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "Invalid characters present of invalid input")]
+        public void TestInvalidOperator()
+        {
+            string input = "* + 3 3 ~ 2 2";
+            double result = Calculator.PrefixCalculator(input);
+        }
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "Invalid characters present of invalid input")]
+        public void TestTooManySigns()
+        {
+            string input = "* + 3 3 +- 2 2";
+            double result = Calculator.PrefixCalculator(input);
         }
     }
 }

@@ -11,6 +11,13 @@ namespace PrefixCalculator
         static void Main(string[] args)
         {
         }
+        public static double PrefixCalculator(string elements)
+        {
+
+        string[] input = elements.Split(' ');
+        int start = 0;
+        return Result(input, ref start);  
+        }
         public static double Result(string[] input, ref int index)
         {
            double result = 0;
@@ -19,21 +26,19 @@ namespace PrefixCalculator
             {
                 index++;
                 return result;
-            }
-            int next1 = index+1;
-            int next2 = index + 2;         
-            switch (input[index])
+            }      
+            switch (input[index++])
             {
                 case "+":
-                    return Result(input, ref next1) + Result(input, ref next2) ;
+                    return Result(input, ref index) + Result(input, ref index) ;
                 case "-":
-                     return Result(input, ref next1)- Result(input, ref next2) ;
+                     return Result(input, ref index)- Result(input, ref index) ;
                 case "*":
-                    return Result(input, ref next1)*Result(input, ref next2) ;
+                    return Result(input, ref index)*Result(input, ref index) ;
                 case "/":
-                    return Result(input, ref next1)/Result(input, ref next2) ;
+                    return Result(input, ref index)/Result(input, ref index) ;
             }
-            return 0;
+            throw new System.ArgumentException("Invalid characters present of invalid input");
         }
         
     }
