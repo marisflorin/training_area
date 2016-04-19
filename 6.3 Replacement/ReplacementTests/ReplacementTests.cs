@@ -10,22 +10,26 @@ namespace _6._3_Replacement.Tests
         [TestMethod()]
         public void ReplaceTest()
         {
-            Assert.AreEqual("TheClearWater",Replacement.Replace("The Water","Clear",4));
+            int start = 0;
+            Assert.AreEqual("TheClearWater",Replacement.Replace("The Water","Clear",ref start,' '));
         }
         [TestMethod()]
         public void ReplaceFirstPosition()
         {
-            Assert.AreEqual("The Clear Water", Replacement.Replace("1Clear Water", "The ", 1));
+            int start = 0;
+            Assert.AreEqual("The Clear Water", Replacement.Replace("1Clear Water", "The ", ref start, '1'));
         }
         [TestMethod()]
         public void ReplaceLastPosition()
         {
-            Assert.AreEqual("12345678910", Replacement.Replace("123456789A", "10", 10));
+            int start = 0;
+            Assert.AreEqual("12345678910", Replacement.Replace("123456789A", "10", ref start, 'A'));
         }
         [TestMethod()]
-        public void ReplaceOutsidePosition()
+        public void ReplaceInexistent()
         {
-            Assert.AreEqual("1234", Replacement.Replace("1234", "A ", 5));
+            int start = 0;
+            Assert.AreEqual("1234", Replacement.Replace("1234", "A ", ref start, '5'));
         }
     }
 }
