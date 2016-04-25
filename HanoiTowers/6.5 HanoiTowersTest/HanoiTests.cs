@@ -43,8 +43,8 @@ Turnurile din Hanoi
             firstTower[3] = ""; auxTower[3] = ""; secondTower[3] = "2 1";            
             ulong level = 0;
             string[] generatedFirstTower = new string[1], generatedSecondTower = new string[1], generatedAuxTower = new string[1];
-            Hanoi.InitializeArrays(1, ref generatedFirstTower, ref generatedAuxTower, ref generatedSecondTower);
-            Hanoi.GenerateMoves(1, ref generatedFirstTower, ref generatedAuxTower, ref generatedSecondTower, ref level);
+            Hanoi.InitializeArrays(2, ref generatedFirstTower, ref generatedAuxTower, ref generatedSecondTower);
+            Hanoi.GenerateMoves(2, ref generatedFirstTower, ref generatedAuxTower, ref generatedSecondTower, ref level);
             CollectionAssert.AreEqual(firstTower, generatedFirstTower);
             CollectionAssert.AreEqual(auxTower, generatedAuxTower);
             CollectionAssert.AreEqual(secondTower, generatedSecondTower);
@@ -65,8 +65,8 @@ Turnurile din Hanoi
             firstTower[7] = ""; auxTower[7] = "";secondTower[7] = "3 2 1";
             ulong level = 0;
             string[] generatedFirstTower = new string[1], generatedSecondTower = new string[1], generatedAuxTower = new string[1];
-            Hanoi.InitializeArrays(1, ref generatedFirstTower, ref generatedAuxTower, ref generatedSecondTower);
-            Hanoi.GenerateMoves(1, ref generatedFirstTower, ref generatedAuxTower, ref generatedSecondTower, ref level);
+            Hanoi.InitializeArrays(3, ref generatedFirstTower, ref generatedAuxTower, ref generatedSecondTower);
+            Hanoi.GenerateMoves(3, ref generatedFirstTower, ref generatedAuxTower, ref generatedSecondTower, ref level);
             CollectionAssert.AreEqual(firstTower, generatedFirstTower);
             CollectionAssert.AreEqual(auxTower, generatedAuxTower);
             CollectionAssert.AreEqual(secondTower, generatedSecondTower);
