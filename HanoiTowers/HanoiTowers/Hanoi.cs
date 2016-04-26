@@ -31,34 +31,48 @@ using System.Threading.Tasks;
 
         }
 
-        public static void GenerateMoves(int numberOfDisks,ref string[] firstTower,ref string[] auxTower,ref string[] secondTower, ref ulong level)
+        public static void GenerateMoves(ref int numberOfDisks,ref string[] firstTower,ref string[] auxTower,ref string[] secondTower, ref ulong level)
         {
             if (numberOfDisks < 1) return;
             if (numberOfDisks == 1)
             {
-                MoveDisk(firstTower, secondTower, level);
+                auxTower[level + 1] = auxTower[level];
+                MoveDisk(ref firstTower,ref secondTower, level);
                 level++;
                 return;
             }
             else
             {
-                GenerateMoves(--numberOfDisks, ref firstTower, ref secondTower, ref auxTower, ref level);
-                MoveDisk(firstTower, secondTower, level);
+                --numberOfDisks;
+                GenerateMoves(ref numberOfDisks, ref firstTower, ref secondTower, ref auxTower, ref level);
+                auxTower[level + 1] = auxTower[level];
+                MoveDisk(ref firstTower,ref  secondTower, level);
                 level++;
-                GenerateMoves(--numberOfDisks, ref auxTower, ref firstTower, ref secondTower, ref level);
+                GenerateMoves(ref numberOfDisks, ref auxTower, ref firstTower, ref secondTower, ref level);
             }
         }
 
-        private static void MoveDisk(string[] firstTower, string[] secondTower, ulong level)
+        private static void MoveDisk(ref string[] firstTower,ref string[] secondTower, ulong level)
         {
             int disk;
-            if (Int32.TryParse(firstTower[level], out disk)) secondTower[level + 1] = firstTower[level];
+            if (IsSingleDisk(firstTower, level, out disk)) TransferDisk(firstTower, secondTower, level);
+
             else
             {
                 firstTower[level + 1] = firstTower[level].Substring(0, firstTower[level].LastIndexOf(' ')); ;
-                if (secondTower[level] == "") secondTower[level + 1] = firstTower[level].Substring(firstTower[level].LastIndexOf(' ') + 1);
-                else secondTower[level + 1] = secondTower[level] + " " + firstTower[level].Substring(firstTower[level].LastIndexOf(' ') + 1);
+                TransferDisk(firstTower, secondTower, level);
             }
+        }
+
+        private static bool IsSingleDisk(string[] firstTower, ulong level, out int disk)
+        {
+            return Int32.TryParse(firstTower[level], out disk);
+        }
+
+        private static void TransferDisk(string[] firstTower, string[] secondTower, ulong level)
+        {
+            if (secondTower[level] == "") secondTower[level + 1] = firstTower[level].Substring(firstTower[level].LastIndexOf(' ') + 1);
+            else secondTower[level + 1] = secondTower[level] + " " + firstTower[level].Substring(firstTower[level].LastIndexOf(' ') + 1);
         }
     }
 }
