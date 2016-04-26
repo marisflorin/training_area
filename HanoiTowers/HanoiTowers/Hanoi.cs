@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
- namespace HanoiTowers
-{   
-       public class Hanoi
+namespace HanoiTowers
+{
+    public class Hanoi
     {
         public static void Main(string[] args)
         {
         }
-        public static void InitializeArrays(int numberOfDisks,ref string[] first,ref string[] aux,ref string[] second)
+        public static void InitializeArrays(int numberOfDisks, ref string[] first, ref string[] aux, ref string[] second)
         {
-            ulong Steps = (ulong)Math.Pow(2,numberOfDisks);
+            ulong Steps = (ulong)Math.Pow(2, numberOfDisks);
             first = new string[Steps];
             aux = new string[Steps];
             second = new string[Steps];
@@ -26,33 +26,31 @@ using System.Threading.Tasks;
             first[0] = Convert.ToString(numberOfDisks);
             for (int i = numberOfDisks - 1; i > 0; i--)
             {
-                first[0] += " "+i.ToString();
+                first[0] += " " + i.ToString();
             }
 
         }
 
-        public static void GenerateMoves(ref int numberOfDisks,ref string[] firstTower,ref string[] auxTower,ref string[] secondTower, ref ulong level)
+        public static void GenerateMoves(int numberOfDisks, ref string[] firstTower, ref string[] auxTower, ref string[] secondTower, ref ulong level)
         {
-            if (numberOfDisks < 1) return;
             if (numberOfDisks == 1)
             {
                 auxTower[level + 1] = auxTower[level];
-                MoveDisk(ref firstTower,ref secondTower, level);
+                MoveDisk(ref firstTower, ref secondTower, level);
                 level++;
-                return;
+             
             }
             else
             {
-                --numberOfDisks;
-                GenerateMoves(ref numberOfDisks, ref firstTower, ref secondTower, ref auxTower, ref level);
+                GenerateMoves(--numberOfDisks, ref firstTower, ref secondTower, ref auxTower, ref level);
                 auxTower[level + 1] = auxTower[level];
-                MoveDisk(ref firstTower,ref  secondTower, level);
+                MoveDisk(ref firstTower, ref secondTower, level);
                 level++;
-                GenerateMoves(ref numberOfDisks, ref auxTower, ref firstTower, ref secondTower, ref level);
+                GenerateMoves(numberOfDisks, ref auxTower, ref firstTower, ref secondTower, ref level);
             }
         }
 
-        private static void MoveDisk(ref string[] firstTower,ref string[] secondTower, ulong level)
+        private static void MoveDisk(ref string[] firstTower, ref string[] secondTower, ulong level)
         {
             int disk;
             if (IsSingleDisk(firstTower, level, out disk)) TransferDisk(firstTower, secondTower, level);
