@@ -17,16 +17,22 @@ namespace _6._6_Pascal_Triangle
                 return;
             }
             if (index == 0)
-                {
+            {
                 triangle[level - 1] = new int[level];
-                triangle[level-1][index] = 1;
-                GenerateElement(level, ref triangle, ++index);
-                }
-            if (index==level-1)
-                {
-                triangle[level-1][index] = 1;
-                GenerateElement(level-1, ref triangle, 0);
-                }
+                triangle[level - 1][index] = 1;
+                GenerateElement(level, ref triangle, index+1);
+            }
+            else
+            if (index == level - 1)
+            {
+                triangle[level - 1][index] = 1;
+                GenerateElement(level - 1, ref triangle, 0);    
+            }
+            else
+            {
+                GenerateElement(level, ref triangle, index + 1);
+                triangle[level - 1][index] = triangle[level - 2][index - 1] + triangle[level - 2][index];
+            }
         }
         static void Main(string[] args)
         {
