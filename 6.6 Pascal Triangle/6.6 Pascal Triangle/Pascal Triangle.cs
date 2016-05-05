@@ -9,7 +9,7 @@ namespace _6._6_Pascal_Triangle
    public class Pascal
     {
         
-        public static void GenerateElement(int level,ref int[][] triangle,int index)
+        public static void GenerateElement(int level,ref int[][] triangle,int index=0)
         {
             if (level-1 ==0)
             {
@@ -32,7 +32,18 @@ namespace _6._6_Pascal_Triangle
             {
                 GenerateElement(level, ref triangle, index + 1);
                 triangle[level - 1][index] = triangle[level - 2][index - 1] + triangle[level - 2][index];
-            }
+            }       
+
+        }
+        public static void ConvertArrange(int[][] triangle,ref string[][] printable)
+        {
+
+
+        }
+        public static int ReturnBiggest(int[][] triangle,int level,int index=0)
+        {
+            if (index == triangle[level-1].Length/2) return triangle[level-1][index];
+            return ReturnBiggest(triangle, level, index + 1);
         }
         static void Main(string[] args)
         {
