@@ -8,8 +8,45 @@ namespace _6._6_Pascal_Triangle
 {
    public class Pascal
     {
-        
-        public static void GenerateElement(int level,ref int[][] triangle,int index=0)
+        public static void GenerateTriangle(int level, ref string[,] printable)
+        {
+            int[][] triangle = new int[level][];
+            GenerateElements(level, ref triangle);
+            int length = ReturnBiggest(triangle, level).ToString().Length;
+            if (IsEven(length)) ++length;
+            string blank = ComplementaryBlank(length);
+            printable = new string[level, level];
+            FillIn(printable, level-1, level-1, level, triangle, length, blank);
+        }
+
+        private static void FillIn(string[,] printable,int i,int j,int level, int[][] triangle, int length, string blank)
+        {
+            if (i < 0) return;
+                if (OutsideOfLimit(i, j, level, triangle)) printable[i, j] = blank;
+                else printable[i, j] = MakeString(triangle[i][level - j - 1], length);
+
+                if (j == 0) FillIn(printable, --i, level - 1, level, triangle, length, blank);
+                else FillIn(printable, i, --j, level, triangle, length, blank);
+
+        }
+
+        private static bool OutsideOfLimit(int i, int j, int level, int[][] triangle)
+        {
+            return j < level - triangle[i].Length;
+        }
+
+        private static bool IsEven(int length)
+        {
+            return length % 2 == 0;
+        }
+
+        private static string ComplementaryBlank(int length,int numberOfBlanks=0)
+        {
+            if (numberOfBlanks >= length / 2) return "";
+            return " "+ComplementaryBlank(length, ++numberOfBlanks);
+        }
+
+        public static void GenerateElements(int level,ref int[][] triangle,int index=0)
         {
             if (level-1 ==0)
             {
@@ -20,17 +57,17 @@ namespace _6._6_Pascal_Triangle
             {
                 triangle[level - 1] = new int[level];
                 triangle[level - 1][index] = 1;
-                GenerateElement(level, ref triangle, index+1);
+                GenerateElements(level, ref triangle, index+1);
             }
             else
             if (index == level - 1)
             {
                 triangle[level - 1][index] = 1;
-                GenerateElement(level - 1, ref triangle, 0);    
+                GenerateElements(level - 1, ref triangle, 0);    
             }
             else
             {
-                GenerateElement(level, ref triangle, index + 1);
+                GenerateElements(level, ref triangle, index + 1);
                 triangle[level - 1][index] = triangle[level - 2][index - 1] + triangle[level - 2][index];
             }       
 
@@ -44,6 +81,13 @@ namespace _6._6_Pascal_Triangle
         {
             if (index == triangle[level-1].Length/2) return triangle[level-1][index];
             return ReturnBiggest(triangle, level, index + 1);
+        }
+        public static string MakeString(int number,int charNumber, int k=0)
+        {
+            string converted = number.ToString();
+            if (converted.Length + k == charNumber) return converted;
+            if (k % 2 == 0) return " " + MakeString(number, charNumber, k + 1);
+            else return MakeString(number, charNumber, k + 1)+ " ";
         }
         static void Main(string[] args)
         {

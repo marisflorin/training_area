@@ -15,7 +15,7 @@ namespace _6._6_Pascal_Triangle.Tests
                 new int[] { 1 },
                 new int[] { 1, 1 }};
             int[][] triangle = new int[2][];            
-            Pascal.GenerateElement(2,ref triangle);
+            Pascal.GenerateElements(2,ref triangle);
             CollectionAssert.AreEqual(triangle[0],testTriangle[0]);
             CollectionAssert.AreEqual(triangle[1],testTriangle[1]);
         }
@@ -32,7 +32,7 @@ namespace _6._6_Pascal_Triangle.Tests
                 new int[] { 1, 6, 15, 20, 15, 6, 1 }
             };
         int[][] triangle=new int[7][];        
-            Pascal.GenerateElement(7 , ref triangle);
+            Pascal.GenerateElements(7 , ref triangle);
             CollectionAssert.AreEqual(triangle[0], testTriangle[0]);
             CollectionAssert.AreEqual(triangle[1], testTriangle[1]);
             CollectionAssert.AreEqual(triangle[2], testTriangle[2]);
@@ -45,15 +45,35 @@ namespace _6._6_Pascal_Triangle.Tests
         public void TestReturnBiggest1()
         {
            int[][] triangle = new int[7][];
-           Pascal.GenerateElement(7, ref triangle);
+           Pascal.GenerateElements(7, ref triangle);
            Assert.AreEqual(Pascal.ReturnBiggest(triangle, 7),20);        
         }
         [TestMethod()]
         public void TestReturnBiggest2()
         {
             int[][] triangle = new int[6][];
-            Pascal.GenerateElement(6, ref triangle);
+            Pascal.GenerateElements(6, ref triangle);
             Assert.AreEqual(Pascal.ReturnBiggest(triangle, 6), 10);
+        }
+        [TestMethod()]
+        public void GeneratePrintable()
+        {
+            string[,] testTriangle = {
+                { " "," "," "," "," "," "," "," "," "," 1 " },
+                { " "," "," "," "," "," "," "," "," 1 "," 1 " },
+                { " "," "," "," "," "," "," "," 1 "," 2 "," 1 " },
+                { " "," "," "," "," "," "," 1 "," 3 "," 3 "," 1 " },
+                { " "," "," "," "," "," 1 "," 4 "," 6 "," 4 "," 1 " },
+                { " "," "," "," "," 1 "," 5 "," 10"," 10"," 5 "," 1 " },
+                { " "," "," "," 1 "," 6 "," 15"," 20"," 15"," 6 "," 1 " },
+                { " "," "," 1 "," 7 "," 21"," 35"," 35"," 21"," 7 "," 1 " },
+                { " "," 1 "," 8 "," 28"," 56"," 70"," 56"," 28"," 8 "," 1 " },
+                { " 1 "," 9 "," 36"," 84","126","126"," 84"," 36"," 9 "," 1 " }
+  // If printed with one blank (" ") between elements the triangle will be perfectly alligned
+            };
+            string[,] triangle=new string[1,1];
+            Pascal.GenerateTriangle(10,ref triangle);
+            CollectionAssert.AreEqual(triangle, testTriangle);        
         }
     }
 }
