@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "7.1. Loto", "7.1. Loto\7.1. Loto.csproj", "{C1A6C0B1-41EA-4A84-87CC-762CD94E2385}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "7.1 LotoTests", "7.1 LotoTests\7.1 LotoTests.csproj", "{30F01B72-8480-4B1F-A9BD-2DA732DDFFA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1A6C0B1-41EA-4A84-87CC-762CD94E2385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1A6C0B1-41EA-4A84-87CC-762CD94E2385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1A6C0B1-41EA-4A84-87CC-762CD94E2385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1A6C0B1-41EA-4A84-87CC-762CD94E2385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30F01B72-8480-4B1F-A9BD-2DA732DDFFA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30F01B72-8480-4B1F-A9BD-2DA732DDFFA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30F01B72-8480-4B1F-A9BD-2DA732DDFFA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30F01B72-8480-4B1F-A9BD-2DA732DDFFA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
