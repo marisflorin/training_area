@@ -28,33 +28,43 @@ namespace _7._2_ServiceCentre
         {
             int wall1 = 0, wall2 = list.Length - 1;
             int i = 0;
+            Vehicle aux;
             while (i <= wall2)
             {
                 switch (list[i].priority)
                 {
                     case (Priority)0:
-                        if (list[wall2].priority == (Priority)2) --wall2;
-                        else
-                        {
-                            if (i > wall1) Swap(ref list[wall1], ref list[i]);
-                            ++wall1; ++i;
-                        }
+                        aux = list[i];
+                        Shift(i, wall1, "right", ref list);
+                        list[wall1] = aux;
+                            ++wall1; ++i;                        
                         break;
                     case (Priority)1:
                         ++i;
                         break;
                     case (Priority)2:
-                        Swap(ref list[wall2], ref list[i]);
-                        --wall2;
+                        aux = list[i];
+                        Shift(i, list.Length-1, "left", ref list);
+                        list[list.Length-1] = aux;
+                        --wall2;                        
                         break;
                 }
             }
         }
-        public static void Swap(ref Vehicle first, ref Vehicle second)
+
+        public static void Shift(int index, int wall, string direction,ref Vehicle[] list)
         {
-            Vehicle aux = first;
-            first = second;
-            second = aux;
+            switch (direction)
+            {
+                case "right":
+                    for (int i = index; i > wall; i--)
+                        list[i] = list[i - 1];
+                    break;
+                case "left":
+                    for (int i = index; i < wall; i++)
+                        list[i] = list[i + 1];
+                    break;
+            }
         }
     }
 }
