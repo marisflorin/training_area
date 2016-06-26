@@ -18,72 +18,73 @@ namespace _7._3WordSort
         }
         public static void SortWords(string textSequence, ref Word[] list)
         {
-            string[] words = textSequence.Split(new string[] { " ", ",", "/", ".", ":"},StringSplitOptions.RemoveEmptyEntries);
-            if (words.Length > 0)
+            string[] words = textSequence.Split(new string[] { " ", ",", "/", ".", ":"},StringSplitOptions.RemoveEmptyEntries);           
+            for (int i=0; i < words.Length;i++)
             {
-                Word currentWord = new Word() { word = words[0], instances = Count(words[0], ref words) };
-                list[0] = currentWord;
+            int index = -1;
+                if (ExistingWord(words[i], list,0,list.Length-1, ref index)) ++list[index].instances;
+                else AddWord(words[i], ref list); 
             }
-
-            int insertIndex;
-
-            while (words.Length > 0) 
-            {
-                Word currentWord = new Word() { word = words[0], instances = Count(words[0], ref words) };
-                insertIndex= FindIndex(currentWord, list, 0, list.Length - 1);
-                InsertWord(currentWord, ref list, insertIndex);
-            }
+            QuickSort(ref list, 0, list.Length - 1);
             
         }
-
-        public static int FindIndex(Word currentWord, Word[] list,int start, int end)
+        public static bool ExistingWord(string currentWord, Word[] list,int begining,int end, ref int index)
         {
-            int half = (start + end) / 2;
-            if (half == 0)
-                if (currentWord.instances > list[0].instances) return 0;
-                else return 1; 
-            if (half == list.Length-1)
-                if (currentWord.instances > list[list.Length-1].instances) return list.Length-1;
-                else return list.Length;          
-            if (currentWord.instances > list[half].instances) return FindIndex(currentWord, list, start, half - 1);
-            else if (currentWord.instances < list[half - 1].instances) return FindIndex(currentWord, list, half + 1, end);
-                 else return half;
-        }
-
-        public static void InsertWord(Word currentWord, ref Word[] list,int insertIndex)
-        {
-            Array.Resize(ref list, list.Length + 1);
-            if (insertIndex!=list.Length-1) ShiftRight(ref list, insertIndex);
-            list[insertIndex] = currentWord;
-        }       
-
-        public static int Count(string currentWord, ref string[] words)
-        {
-            int i = 0, k = 0;
-            while (i < words.Length)
-            {
-                if (words[i] == currentWord)
+            if (end < 0 || begining > list.Length - 1) return false;
+            int middle = (begining + end) / 2;
+            if (currentWord==list[middle].word)
                 {
-                    ShiftLeft(ref words, i);
-                    Array.Resize(ref words, words.Length - 1);
-                    k++;
+                index = middle;
+                return true;
                 }
-                else i++;
+            if (begining == end || end== middle) return false;
+            if  (ExistingWord(currentWord, list, begining, middle-1, ref index)) return true;
+            else return ExistingWord(currentWord, list, middle+1,end, ref index);
+                    
+        }
+
+        public static void AddWord(string currentWord, ref Word[] list)
+        {
+            if (list[0].word!=null) Array.Resize(ref list, list.Length + 1);
+            list[list.Length-1].word = currentWord;
+            list[list.Length - 1].instances = 1;
+        }
+        public static void QuickSort(ref Word[] list,int left,int right)
+        {
+            if (left > -1 && right < list.Length && left < right)
+            {
+                int pivotIndex = 0;
+                if (left < right)
+                    pivotIndex = GetIndex(ref list, left, right);
+                QuickSort(ref list, left, pivotIndex - 1);
+                QuickSort(ref list, pivotIndex + 1, right);
             }
-            return k;
         }
 
-        public static void ShiftLeft(ref string[] words, int start)
-        {
-            for (int i = start; i < words.Length - 1; i++)
-                words[i] = words[i + 1];
-        }
+        public static int GetIndex(ref Word[] list, int left, int right)
+        {	  	
+	    int pivotIndex = left;	
+	    if (left>-1 &&right<list.Length)    	
+    	while(left!=right)
+            {
+            while( list[pivotIndex].instances >= list[right].instances && pivotIndex != right) right--;	
+            if(pivotIndex == right) break;    		
+            else if(list[pivotIndex].instances < list[right].instances) Swap(ref list, right, ref pivotIndex);
+            while (list[pivotIndex].instances <= list[left].instances && pivotIndex != left) left++;	
+        	if(pivotIndex == left) break;
+		    else if(list[pivotIndex].instances > list[left].instances) Swap(ref list, left, ref pivotIndex);
+         
+	        }
+            return pivotIndex;
+          }
 
-        public static void ShiftRight(ref Word[] list, int start)
+        private static void Swap(ref Word[] list, int right, ref int pivotIndex)
         {
-            for (int i = start; i < list.Length - 1; i++)
-                list[i+1] = list[i];
+            Word aux = list[right];
+            list[right] = list[pivotIndex];
+            list[pivotIndex] = aux;
+            pivotIndex = right;
         }
-    }
+      }
 }
 
