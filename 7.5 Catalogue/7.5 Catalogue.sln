@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "7.5 Catalogue", "7.5 Catalogue\7.5 Catalogue.csproj", "{394AE27D-12DE-4013-AE73-80966638FF40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogueTests", "CatalogueTests\CatalogueTests.csproj", "{62F11F11-9597-40CA-87EB-27B32A38204C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{394AE27D-12DE-4013-AE73-80966638FF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394AE27D-12DE-4013-AE73-80966638FF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{394AE27D-12DE-4013-AE73-80966638FF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{394AE27D-12DE-4013-AE73-80966638FF40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62F11F11-9597-40CA-87EB-27B32A38204C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F11F11-9597-40CA-87EB-27B32A38204C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62F11F11-9597-40CA-87EB-27B32A38204C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62F11F11-9597-40CA-87EB-27B32A38204C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
