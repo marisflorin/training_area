@@ -19,16 +19,26 @@ namespace _7._5_Catalogue.Tests
     [TestClass()]
     public class UnitTest1
     {
-        [TestMethod()]
+        public pupil[] catalogue = new pupil[0];
+        string[] listOfPupils = { "Petrescu George", "Ionescu George", "Albulescu Mihai", "Abrudan Silviu", "Marin Marin" };
+          [TestMethod()]
         public void AlphabeticOrderTest()
-        {
-            pupil[] catalogue = new pupil[0];
-            string[] listOfPupils = { "Petrescu George", "Ionescu George", "Albulescu Mihai", "Abrudan Silviu", "Marin Marin" };
+        {            
             Catalogue.GenerateCatalogue(listOfPupils, ref catalogue);
             pupil[] sortedCatalogue = { new pupil { name = "Abrudan Silviu" },new pupil { name = "Albulescu Mihai" }, new pupil { name = "Ionescu George" }, new pupil { name = "Marin Marin" }, new pupil { name = "Petrescu George" } };
             Catalogue.AlphabeticOrder(ref catalogue);
             CollectionAssert.AreEqual(catalogue,sortedCatalogue);
         }
+        [TestMethod()]
+        public void GradesAndMedianTest()
+        {
+            Catalogue.GenerateCatalogue(listOfPupils, ref catalogue);
+            int[] mathematicsGrades ={ 10, 9, 9, 9 };
+            Catalogue.AddGrades(ref catalogue, "Marin Marin", Objects.Mathematics, mathematicsGrades);
+            decimal mathematicsMedian= 9.25m ;
+            int index = Catalogue.FindPupilIndex("Marin Marin", catalogue);
+            Assert.AreEqual(mathematicsMedian, catalogue[index].Mathematics.median);
+        } 
     }
 }
 
