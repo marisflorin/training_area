@@ -37,8 +37,52 @@ namespace _7._5_Catalogue.Tests
             Catalogue.AddGrades(ref catalogue, "Marin Marin", Objects.Mathematics, mathematicsGrades);
             decimal mathematicsMedian= 9.25m ;
             int index = Catalogue.FindPupilIndex("Marin Marin", catalogue);
-            Assert.AreEqual(mathematicsMedian, catalogue[index].Mathematics.median);
-        } 
+            Assert.AreEqual(mathematicsMedian, catalogue[index].Mathematics.mean);
+        }
+        [TestMethod()]
+        public void MedianOrderingTest()
+        {
+            BuildCatalogue();
+
+            Catalogue.CalculateGeneralMean(ref catalogue);
+            Catalogue.OrderByGreatestMean(ref catalogue, 0, catalogue.Length - 1);
+
+            Assert.AreEqual(9.58m, catalogue[0].generalMean);
+            Assert.AreEqual(8.00m, catalogue[1].generalMean);
+            Assert.AreEqual(7.31m, catalogue[2].generalMean);
+            Assert.AreEqual(7.31m, catalogue[3].generalMean);
+            Assert.AreEqual(7.00m, catalogue[4].generalMean);
+        }
+
+        private void BuildCatalogue()
+        {
+            Catalogue.GenerateCatalogue(listOfPupils, ref catalogue);
+            int[] mathematicsGrades = { 10, 9, 9, 9 };
+            int[] historyGrades = { 5, 5, 6 };
+            int[] physicsGrades = { 6, 5, 9 };
+            int[] geographyGrades = { 8, 8, 8 };
+            Catalogue.FillAllGrades(ref catalogue, "Abrudan Silviu", mathematicsGrades, historyGrades, physicsGrades, geographyGrades);
+            mathematicsGrades = new int[3] { 10, 10, 10 };
+            historyGrades = new int[3] { 10, 10, 10 };
+            physicsGrades = new int[3] { 10, 10, 8 };
+            geographyGrades = new int[4] { 10, 10, 8, 8 };
+            Catalogue.FillAllGrades(ref catalogue, "Albulescu Mihai", mathematicsGrades, historyGrades, physicsGrades, geographyGrades);
+            mathematicsGrades = new int[3] { 7, 7, 7 };
+            historyGrades = new int[3] { 7, 7, 7 };
+            physicsGrades = new int[3] { 7, 7, 7 };
+            geographyGrades = new int[3] { 7, 7, 7 };
+            Catalogue.FillAllGrades(ref catalogue, "Ionescu George", mathematicsGrades, historyGrades, physicsGrades, geographyGrades);
+            mathematicsGrades = new int[3] { 8, 8, 8 };
+            historyGrades = new int[3] { 8, 8, 8 };
+            physicsGrades = new int[3] { 10, 5, 9 };
+            geographyGrades = new int[3] { 8, 8, 8 };
+            Catalogue.FillAllGrades(ref catalogue, "Marin Marin", mathematicsGrades, historyGrades, physicsGrades, geographyGrades);
+            mathematicsGrades = new int[4] { 10, 9, 9, 9 };
+            historyGrades = new int[3] { 5, 5, 6 };
+            physicsGrades = new int[3] { 6, 5, 9 };
+            geographyGrades = new int[3] { 8, 8, 8 };
+            Catalogue.FillAllGrades(ref catalogue, "Petrescu George", mathematicsGrades, historyGrades, physicsGrades, geographyGrades);
+        }
     }
 }
 
