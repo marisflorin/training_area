@@ -89,7 +89,7 @@ namespace _7._5_Catalogue
                     break;
             }
           }
-        public static int FindPupilIndex(string pupilName, pupil[] catalogue)
+        public static int FindPupilIndex(string pupilName, pupil[] catalogue) // liniar search
         {
             for (int i = 0; i < catalogue.Length; i++)
                 if (catalogue[i].name == pupilName) return i;
@@ -126,6 +126,96 @@ namespace _7._5_Catalogue
                 if (catalogue[indexOfGreatest].generalMean < catalogue[i].generalMean) indexOfGreatest = i;
             Swap(ref catalogue, beg, indexOfGreatest);
             OrderByGreatestMean(ref catalogue, beg + 1, end);
+        }
+        public static int SpecificMeanIndex(ref pupil[] catalogue, decimal specificMean,int beg, int end)
+        {
+            if (beg > end) throw new ArgumentException("There is no pupil having the searched median");
+            int mid = beg + end / 2;
+            if (catalogue[mid].generalMean == specificMean) return mid;
+            return catalogue[mid].generalMean > specificMean ? SpecificMeanIndex(ref catalogue, specificMean, beg, mid) : SpecificMeanIndex(ref catalogue, specificMean, mid, end);           
+        }
+        public static void AddSimilar(ref int[] list,pupil[] catalogue,int index)
+        {
+            int i = index-1;
+            while (catalogue[index].generalMean==catalogue[i].generalMean && i>=0)
+            {
+                Array.Resize(ref list, list.Length + 1);
+                ShiftLeft(list);
+                list[0] = i;
+                i--;
+            }
+            i = index+1;
+            while (catalogue[index].generalMean == catalogue[i].generalMean && i < catalogue.Length)
+            {
+                Array.Resize(ref list, list.Length + 1);                
+                list[list.Length-1] = i;
+                i++;
+            }
+        }
+        private static void ShiftLeft(int[] list)
+        {
+            for (int j = list.Length - 1; j > 0; j--)
+                list[j] = list[j - 1];
+        }
+        public static void CountSpecificGrade(ref pupil[] catalogue, int gradeToCount)
+        {
+            for (int i = 0; i < catalogue.Length; i++)
+            {
+                int k = 0;
+                for (int j = 0; j < catalogue[i].Mathematics.grades.Count; j++)
+                    if (gradeToCount == catalogue[i].Mathematics.grades[j]) k++;
+
+                for (int j = 0; j < catalogue[i].History.grades.Count; j++)
+                    if (gradeToCount == catalogue[i].History.grades[j]) k++;
+
+                for (int j = 0; j < catalogue[i].Physics.grades.Count; j++)
+                    if (gradeToCount == catalogue[i].Physics.grades[j]) k++;
+
+                for (int j = 0; j < catalogue[i].Geography.grades.Count; j++)
+                    if (gradeToCount == catalogue[i].Geography.grades[j]) k++;
+                catalogue[i].specificCount = k;
+            }        
+          }
+
+        public static void MergeSortGrades(ref pupil[] catalogue, int beg, int end) //merge sort
+        {
+            int mid = (beg + end) / 2;
+            if (beg < end && end < catalogue.Length)
+            {
+                MergeSortGrades(ref catalogue, beg, mid);
+                MergeSortGrades(ref catalogue, mid + 1, end);
+                MergeLists(ref catalogue, beg, mid, end);
+            }
+            else return;
+        }
+        public static void MergeLists(ref pupil[] catalogue,int beg, int mid, int end)
+        {
+            int length = end + 1;
+            pupil[] aux=new pupil[length];
+            int firstIndex = beg;
+            int secondIndex = mid + 1;
+            int auxIndex = beg;
+            while (firstIndex <= mid && secondIndex <= end)
+                aux[auxIndex++] = catalogue[firstIndex].specificCount > catalogue[secondIndex].specificCount ? catalogue[firstIndex++] : catalogue[secondIndex++];
+            while (firstIndex <= mid) aux[auxIndex++] = catalogue[firstIndex++];
+            while (secondIndex <= end) aux[auxIndex++] = catalogue[secondIndex++];
+            for(int i=beg; i<=end;i++) catalogue[i]=aux[i];
+        }
+        public static void PupilsWithMostGrades(ref string[] pupilNames,ref pupil[] catalogue,int searchedGrade )
+        {
+            CountSpecificGrade(ref catalogue, searchedGrade);
+            MergeSortGrades(ref catalogue, 0, catalogue.Length - 1);
+            if (catalogue[0].specificCount > 0)
+            {
+                pupilNames[0] = catalogue[0].name;
+                int i = 1;
+                while (catalogue[0].specificCount == catalogue[i].specificCount && i >= 0)
+                {
+                    Array.Resize(ref pupilNames, pupilNames.Length + 1);
+                    pupilNames[i] = catalogue[i].name;
+                    i++;
+                }
+            }
         }
     }
 }

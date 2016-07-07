@@ -30,7 +30,7 @@ namespace _7._5_Catalogue.Tests
             CollectionAssert.AreEqual(catalogue,sortedCatalogue);
         }
         [TestMethod()]
-        public void GradesAndMedianTest()
+        public void GradesAndMeanTest()
         {
             Catalogue.GenerateCatalogue(listOfPupils, ref catalogue);
             int[] mathematicsGrades ={ 10, 9, 9, 9 };
@@ -40,7 +40,7 @@ namespace _7._5_Catalogue.Tests
             Assert.AreEqual(mathematicsMedian, catalogue[index].Mathematics.mean);
         }
         [TestMethod()]
-        public void MedianOrderingTest()
+        public void MeanOrderingTest()
         {
             BuildCatalogue();
 
@@ -53,7 +53,29 @@ namespace _7._5_Catalogue.Tests
             Assert.AreEqual(7.31m, catalogue[3].generalMean);
             Assert.AreEqual(7.00m, catalogue[4].generalMean);
         }
+        [TestMethod()]
+        public void FindSpecificMeanTest()
+        {
+            BuildCatalogue();
+            Catalogue.CalculateGeneralMean(ref catalogue);
+            Catalogue.OrderByGreatestMean(ref catalogue, 0, catalogue.Length - 1);
+            int[] indexList = new int[1];
+            indexList[0]=Catalogue.SpecificMeanIndex(ref catalogue, 7.31m, 0, catalogue.Length - 1);
+            Catalogue.AddSimilar(ref indexList, catalogue, indexList[0]);
+            int[] testList = { 2, 3 };
+            CollectionAssert.AreEqual(testList, indexList);
+            
+        }
+        [TestMethod()]
+        public void SpecificGradePupilsTest()
+        {
+            BuildCatalogue();
+            string[] pupilNames = new string[1];
+            Catalogue.PupilsWithMostGrades(ref pupilNames, ref catalogue, 10);
+            string[] testList = { "Albulescu Mihai" };
+            CollectionAssert.AreEqual(testList, pupilNames);
 
+        }
         private void BuildCatalogue()
         {
             Catalogue.GenerateCatalogue(listOfPupils, ref catalogue);
