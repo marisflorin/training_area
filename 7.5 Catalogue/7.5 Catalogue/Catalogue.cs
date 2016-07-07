@@ -209,13 +209,43 @@ namespace _7._5_Catalogue
             {
                 pupilNames[0] = catalogue[0].name;
                 int i = 1;
-                while (catalogue[0].specificCount == catalogue[i].specificCount && i >= 0)
+                while (catalogue[0].specificCount == catalogue[i].specificCount && i < catalogue.Length)
                 {
                     Array.Resize(ref pupilNames, pupilNames.Length + 1);
                     pupilNames[i] = catalogue[i].name;
                     i++;
                 }
             }
+        }
+        public static void InsertSortGeneralMean(ref pupil[] catalogue) // insert sort
+        {
+            int wall = 1;
+            while (wall < catalogue.Length)
+            {
+                int i = wall;
+                while (i > 0 && catalogue[i].generalMean > catalogue[i - 1].generalMean)
+                {
+                    Swap(ref catalogue, i - 1, i);
+                    i--;
+                }
+                wall++;
+            }
+        }
+        public static void LowestMeanPupils(ref pupil[] catalogue,ref string[] pupilNames)
+        {
+            CalculateGeneralMean(ref catalogue);
+            InsertSortGeneralMean(ref catalogue);
+            pupilNames[0] = catalogue[catalogue.Length-1].name;
+            int k = 1;
+            int i = catalogue.Length-2;
+            while (catalogue[catalogue.Length-1].generalMean == catalogue[i].specificCount && i >= 0)
+            {
+                Array.Resize(ref pupilNames, pupilNames.Length + 1);
+                pupilNames[k] = catalogue[i].name;
+                i--;
+                k++;
+            }
+
         }
     }
 }

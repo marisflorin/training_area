@@ -76,6 +76,16 @@ namespace _7._5_Catalogue.Tests
             CollectionAssert.AreEqual(testList, pupilNames);
 
         }
+        [TestMethod()]
+        public void LowestMeanPupilsTest()
+        {
+            BuildCatalogue();
+            string[] pupilNames = new string[1];
+            Catalogue.LowestMeanPupils(ref catalogue, ref pupilNames);
+            string[] testList = { "Ionescu George" };
+            CollectionAssert.AreEqual(testList, pupilNames);
+
+        }
         private void BuildCatalogue()
         {
             Catalogue.GenerateCatalogue(listOfPupils, ref catalogue);
