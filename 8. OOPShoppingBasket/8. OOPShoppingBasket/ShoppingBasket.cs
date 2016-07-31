@@ -8,7 +8,7 @@ namespace _8.OOPShoppingBasket
 {
     public class ShoppingBasket
     {
-        
+
         public List<Item> shoppingBasket;
 
         public ShoppingBasket()
@@ -20,11 +20,11 @@ namespace _8.OOPShoppingBasket
         {
             this.shoppingBasket.Add(item);
         }
-        
+
         public decimal GetTotalPrice()
         {
-            decimal totalPrice = 0; 
-            foreach( Item item in this.shoppingBasket)
+            decimal totalPrice = 0;
+            foreach (Item item in this.shoppingBasket)
             {
                 totalPrice += item.price;
             }
@@ -38,6 +38,15 @@ namespace _8.OOPShoppingBasket
                 if (item.price < cheapestItem.price) cheapestItem = item;
             }
             return cheapestItem;
+        }
+        public void RemoveMostExpensiveItem()
+        {
+            Item mostExpensive = this.shoppingBasket[0];
+            foreach (Item item in this.shoppingBasket)
+            {
+                if (item.price > mostExpensive.price) mostExpensive = item;
+            }
+            shoppingBasket.Remove(mostExpensive);
         }
     }
 }
