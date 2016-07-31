@@ -48,5 +48,13 @@ namespace _8.OOPShoppingBasket
             }
             shoppingBasket.Remove(mostExpensive);
         }
+        public decimal GetAveragePrice()
+        {
+            decimal averagePrice;
+            decimal sum = GetTotalPrice();
+
+            averagePrice = sum / this.shoppingBasket.Count;
+           return averagePrice;
+        }
     }
 }

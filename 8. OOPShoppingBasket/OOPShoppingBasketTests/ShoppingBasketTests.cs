@@ -76,5 +76,12 @@ Ai un coș plin de produse. Dacă cunoști prețul fiecărui produs în parte:
             Assert.AreEqual("shugar", basket.shoppingBasket[0].name);
             Assert.AreEqual(6.0m, basket.shoppingBasket[0].price);            
         }
+        [TestMethod()]
+        public void GetAveragePriceTest()
+        {
+            ShoppingBasket basket = AddItems();
+            
+            Assert.AreEqual(18.6633m, Math.Round(basket.GetAveragePrice(),4));
+        }
     }
 }
